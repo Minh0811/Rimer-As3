@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 import User from "../Models/userModel.js";
 import { handleServerError, setJwtCookie } from "../utils/functions.js";
+
 const register = async (req, res) => {
   try {
     const { email, name, password } = req.body;
@@ -43,4 +44,48 @@ const register = async (req, res) => {
     handleServerError(res, error);
   }
 };
-export { register };
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: "Incomplete data." });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const passwordMatch = await bcrypt.compare(password, user.password);
+
+      if (!passwordMatch) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const jwtCookie = req.cookies["jwt-cookie"];
+
+      if (jwtCookie) {
+        return res
+          .status(409)
+          .json({ message: "An user is already authenticated" });
+      }
+
+      const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+      })
+
+      setJwtCookie(res, token);
+
+      res.status(200).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      });
+      
+    } else {
+        return res.status(401).json({ message: "Invalid email or password"})
+    }
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+export { register , login};
