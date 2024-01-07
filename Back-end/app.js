@@ -1,10 +1,8 @@
-
-
-import express  from "express";
+import express from "express";
 import dotenv from "dotenv";
 import cookiesParser from "cookie-parser";
 import connectDatabase from "./config/database.js";
-import authRoutes from "./routes/authRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 connectDatabase();
 //Connect to database
@@ -17,7 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookiesParser());
 
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
-
