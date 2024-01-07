@@ -88,4 +88,17 @@ const login = async (req, res) => {
     handleServerError(res, error);
   }
 };
-export { register , login};
+
+const logout = async (req, res) => {
+    try {
+        res.cookie('jwt-cookie', "", {
+            httpOnly: true,
+            expires: new Date(0)
+        });
+
+        res.status(200).json({ message: "User logged out."})
+    } catch (error) {
+        handleServerError(res, error);
+    }
+}
+export { register , login, logout};
