@@ -2,6 +2,7 @@ package com.khaiminh.rimer.LoginView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
 
     private EditText accountInput;
     private EditText passwordInput;
+    private EditText emailInput;
     ILoginController loginController;
 
     @Override
@@ -49,9 +51,23 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onForgetPassword();
             }
         });
+    }
+
+    private void onForgetPassword(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.layout_forget_password);
+
+        Button sendingEmail = dialog.findViewById(R.id.emailInput);
+        sendingEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+        dialog.show();
     }
 
     @Override

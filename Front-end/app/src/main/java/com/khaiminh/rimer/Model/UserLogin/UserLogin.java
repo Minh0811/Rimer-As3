@@ -9,6 +9,9 @@ public class UserLogin implements IUserLogin{
         this.account = account;
         this.password = password;
     }
+    public UserLogin(){
+    }
+
     @Override
     public String getAccount() {
         return account;

@@ -5,13 +5,14 @@ import com.khaiminh.rimer.Model.UserLogin.UserLogin;
 
 public class LoginController implements ILoginController{
     InterfaceLogin interfaceLogin;
+    UserLogin user;
     public LoginController (InterfaceLogin interfaceLogin){
         this.interfaceLogin = interfaceLogin;
     }
 
     @Override
     public void OnLogin(String account, String password) {
-        UserLogin user = new UserLogin(account, password);
+        user = new UserLogin(account, password);
         int numCase = user.isValid();
 
         if (numCase == 1){
@@ -24,4 +25,10 @@ public class LoginController implements ILoginController{
             interfaceLogin.OnLoginSuccess("Login");
         }
     }
+//    @Override
+//    public void OnSignup(String account, String password, String name) {
+//        user = new UserLogin(account, password, name);
+//
+//    }
+
 }
