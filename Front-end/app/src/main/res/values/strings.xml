@@ -11,4 +11,6 @@
     <string name="cancel">Cancel</string>
     <string name="send">Send</string>
     <string name="forget_your_password">Forget your password</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
 </resources>
