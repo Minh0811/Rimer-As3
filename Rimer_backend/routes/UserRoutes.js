@@ -13,12 +13,13 @@ router.post("/", (req, res) => {
         authClient.verifyIdToken({ idToken, audience: clientId })
             .then(async response => {
                 // console.log(response)
-                const { email_verified, email, name } = response.payload
+                const { email_verified, email, name, picture } = response.payload
                 if (email_verified) {
                     const user = await Users.findOne({ email });
                         if(user){
                             return res.json({
                                 message: email,
+                                picture: user.picture,
                                 name: user.name,
                                 email: user.email
                               });
@@ -29,6 +30,7 @@ router.post("/", (req, res) => {
                                 name,
                                 email,
                                 password: pass,
+                                picture,
                             });
 
                             newUser.save()
@@ -36,6 +38,7 @@ router.post("/", (req, res) => {
                             res.status(200).json({
                                 name: newUser.name,
                                 email: newUser.email,
+                                picture: newUser.picture,
                             });
                         }
                 }
