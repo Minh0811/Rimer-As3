@@ -1,6 +1,8 @@
 package com.khaiminh.rimer.LoginView;
 
+import android.content.Context;
+
 public interface InterfaceLogin {
-    void OnLoginSuccess(String string);
+    void OnLoginSuccess();
     void OnLoginError(String string);
 }
