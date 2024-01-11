@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
@@ -24,7 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class userControllers extends AppCompatActivity implements IUserControllers {
     private RetrofitInterface retrofitInterface;
-
     private RetrofitControllers retrofitControllers = new RetrofitControllers();
 
     public void retrofitHandle(){
@@ -107,7 +108,7 @@ public class userControllers extends AppCompatActivity implements IUserControlle
     }
 
     @Override
-    public void authGoogle(){
-
+    public void authGoogle(GoogleSignInOptions gso, GoogleSignInClient gsc){
+        retrofitHandle();
     }
 }

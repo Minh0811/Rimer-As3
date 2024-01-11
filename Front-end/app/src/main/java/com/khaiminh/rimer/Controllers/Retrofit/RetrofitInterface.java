@@ -13,4 +13,6 @@ public interface RetrofitInterface {
     Call<User> executeLogin(@Body HashMap<String, String> map);
     @POST("api/auth/register/")
     Call<Void> executeSignup(@Body HashMap<String, String> map);
+    @POST("api/auth/authGoogle/")
+    Call<Void> executeAuthGoogle(@Body HashMap<String, String> map);
 }
