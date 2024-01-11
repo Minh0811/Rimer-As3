@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.gson.Gson;
@@ -105,10 +106,5 @@ public class userControllers extends AppCompatActivity implements IUserControlle
                         Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    @Override
-    public void authGoogle(GoogleSignInOptions gso, GoogleSignInClient gsc){
-        retrofitHandle();
     }
 }

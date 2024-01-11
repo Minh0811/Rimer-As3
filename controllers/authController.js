@@ -3,9 +3,8 @@ import jwt from "jsonwebtoken";
 
 import User from "../Models/userModel.js";
 import { handleServerError, setJwtCookie } from "../utils/functions.js";
+import { OAuth2Client } from "google-auth-library";
 
-
-const { OAuth2Client } = require('google-auth-library')
 const clientId = process.env.GOOGLE_CLIENT_ID;
 const authClient = new OAuth2Client(clientId)
 

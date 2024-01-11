@@ -1,5 +1,6 @@
 package com.khaiminh.rimer.Controllers.Retrofit;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.khaiminh.rimer.Model.User;
 
 import java.util.HashMap;

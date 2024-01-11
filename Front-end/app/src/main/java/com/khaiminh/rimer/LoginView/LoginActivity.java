@@ -25,7 +25,6 @@ import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.SignupView.SignupActivity;
 
 public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
-    private EditText accountInput;
     private EditText passwordInput;
     private EditText emailInput;
     ILoginController loginController;
@@ -48,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loginController.OnLogin(accountInput.getText().toString(),passwordInput.getText().toString());
                 userControllers.login(emailInput.getText().toString(), passwordInput.getText().toString(), LoginActivity.this);
             }
         });
@@ -62,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
             }
         });
 
+//        login by google
         Button authGoogle = (Button) findViewById(R.id.authGoogle);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this, gso);
@@ -121,7 +120,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1000){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-
             try {
                 task.getResult(ApiException.class);
                 navigateToSecondActivity();
