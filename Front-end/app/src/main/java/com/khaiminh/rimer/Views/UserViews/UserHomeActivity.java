@@ -1,4 +1,4 @@
-package com.khaiminh.rimer;
+package com.khaiminh.rimer.Views.UserViews;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,26 +14,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.khaiminh.rimer.Controllers.UserControllers.IUserControllers;
-import com.khaiminh.rimer.Controllers.UserControllers.userControllers;
-import com.khaiminh.rimer.LoginView.LoginActivity;
+import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
+import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.LoginView.LoginActivity;
 
-import java.util.HashMap;
-import java.util.Objects;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class MainActivity extends AppCompatActivity {
+public class UserHomeActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-    userControllers userControllers = new userControllers();
+    UserControllers userControllers = new UserControllers();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_home);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
@@ -48,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 //        google account
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if(acct!=null){
-            userControllers.signup(acct.getDisplayName(), acct.getEmail(), "123", MainActivity.this);
+            userControllers.signup(acct.getDisplayName(), acct.getEmail(), "123", UserHomeActivity.this);
             String personName = acct.getDisplayName();
             name.setText(personName);
         }
@@ -61,13 +53,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     void signOut(){
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(Task<Void> task) {
                 finish();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
             }
         });
     }

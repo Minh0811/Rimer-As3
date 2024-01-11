@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.LoginView;
+package com.khaiminh.rimer.Views.LoginView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,16 +19,16 @@ import com.google.android.gms.tasks.Task;
 import com.khaiminh.rimer.Controllers.LoginController.ILoginController;
 import com.khaiminh.rimer.Controllers.UserControllers.IUserControllers;
 import com.khaiminh.rimer.Controllers.LoginController.LoginController;
-import com.khaiminh.rimer.Controllers.UserControllers.userControllers;
-import com.khaiminh.rimer.MainActivity;
+import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.R;
-import com.khaiminh.rimer.SignupView.SignupActivity;
+import com.khaiminh.rimer.Views.SignupView.SignupActivity;
+import com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 
 public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
     private EditText passwordInput;
     private EditText emailInput;
     ILoginController loginController;
-    IUserControllers userControllers = new userControllers();
+    IUserControllers userControllers = new UserControllers();
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
 
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
             }
         });
 
-        Button signup = (Button) findViewById(R.id.loginButton);
+        Button signup = (Button) findViewById(R.id.signUpButton);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
     }
     void navigateToSecondActivity(){
         finish();
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
         startActivity(intent);
     }
 
