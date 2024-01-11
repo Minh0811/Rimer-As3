@@ -23,74 +23,83 @@ import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.LoginView.LoginActivity;
 
 public class UserHomeActivity extends AppCompatActivity {
-    GoogleSignInOptions gso;
-    GoogleSignInClient gsc;
-    UserControllers userControllers = new UserControllers();
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient gsc;
+    private UserControllers userControllers = new UserControllers();
     private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
+        // Initialize the drawer layout
         drawerLayout = findViewById(R.id.drawer_layout);
 
         // Set up the navigation drawer
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(item -> {
-            // Handle navigation view item clicks here.
-            int id = item.getItemId();
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.nav_header_username);
+        Button signOutBtn = headerView.findViewById(R.id.nav_header_signout);
 
+        // Set navigation item selection listener
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
             if (id == R.id.nav_item1) {
                 // Handle action for item 1
             } else if (id == R.id.nav_item2) {
                 // Handle action for item 2
             }
-
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
 
+        // Set up the menu button to open the navigation drawer
         ImageButton menuButton = findViewById(R.id.menu_button);
         menuButton.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        gsc = GoogleSignIn.getClient(this,gso);
+        // Configure Google Sign In
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        gsc = GoogleSignIn.getClient(this, gso);
 
-        TextView name = findViewById(R.id.name);
+        // Set the username in the navigation drawer and main layout
+
         Intent intent = getIntent();
-        if (intent.getExtras() != null){
-            String username = (String) intent.getExtras().get("username");
-            name.setText(username);
+        if (intent.getExtras() != null) {
+            String username = intent.getStringExtra("username");
+            navUsername.setText(username);
         }
 
-//        google account
+        // Check for Google account and set the username
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        if(acct!=null){
-            userControllers.signup(acct.getDisplayName(), acct.getEmail(), "123", UserHomeActivity.this);
+        if (acct != null) {
+            userControllers.signup(acct.getDisplayName(), acct.getEmail(), "123", this);
             String personName = acct.getDisplayName();
-            name.setText(personName);
+            navUsername.setText(personName);
         }
 
-        Button signOutBtn = (Button) findViewById(R.id.signout);
-        signOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+        // Set sign out button listener
+        signOutBtn.setOnClickListener(v -> signOut());
     }
+
     @Override
     public void onBackPressed() {
+        // Close the navigation drawer if it's open, otherwise perform default back action
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
-    void signOut(){
+
+    // Sign out method
+    private void signOut() {
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(Task<Void> task) {
+                // Redirect to login activity after sign out
                 finish();
                 startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
             }

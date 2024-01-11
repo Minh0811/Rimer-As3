@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Rimer"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCyQW7KcSGQ6o_4nVMawuht1C7dB-9jxrc"></meta-data>>
         <activity
             android:name=".Views.UserViews.UserHomeActivity"
             android:exported="false" />
