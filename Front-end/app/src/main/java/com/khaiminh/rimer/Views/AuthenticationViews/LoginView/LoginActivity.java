@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.Views.LoginView;
+package com.khaiminh.rimer.Views.AuthenticationViews.LoginView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +21,7 @@ import com.khaiminh.rimer.Controllers.UserControllers.IUserControllers;
 import com.khaiminh.rimer.Controllers.LoginController.LoginController;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.R;
-import com.khaiminh.rimer.Views.SignupView.SignupActivity;
+import com.khaiminh.rimer.Views.AuthenticationViews.SignupView.SignupActivity;
 import com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 
 public class LoginActivity extends AppCompatActivity implements InterfaceLogin{

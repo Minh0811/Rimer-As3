@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.Views.SignupView;
+package com.khaiminh.rimer.Views.AuthenticationViews.SignupView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
-import com.khaiminh.rimer.Views.LoginView.LoginActivity;
+import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.R;
 
 public class SignupActivity extends AppCompatActivity {
