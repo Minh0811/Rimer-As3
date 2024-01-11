@@ -1,4 +1,4 @@
-package com.khaiminh.rimer;
+package com.khaiminh.rimer.Controllers.Retrofit;
 
 import com.khaiminh.rimer.Model.User;
 

@@ -3,7 +3,6 @@ package com.khaiminh.rimer.LoginView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +11,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.khaiminh.rimer.Controllers.LoginController.ILoginController;
-import com.khaiminh.rimer.Controllers.LoginController.IUserControllers;
+import com.khaiminh.rimer.Controllers.UserControllers.IUserControllers;
 import com.khaiminh.rimer.Controllers.LoginController.LoginController;
-import com.khaiminh.rimer.Controllers.LoginController.userControllers;
-import com.khaiminh.rimer.MainActivity;
+import com.khaiminh.rimer.Controllers.UserControllers.userControllers;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.SignupView.SignupActivity;
 
@@ -25,25 +23,24 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
     private EditText passwordInput;
     private EditText emailInput;
     ILoginController loginController;
-    IUserControllers userControllers;
+    IUserControllers userControllers = new userControllers();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        accountInput = (EditText) findViewById(R.id.accountInput);
+        emailInput = (EditText) findViewById(R.id.emailInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
 
         loginController = new LoginController(LoginActivity.this);
-        userControllers = new userControllers();
 
-        Button login = (Button) findViewById(R.id.loginSubmit);
+        Button login = (Button) findViewById(R.id.loginSubmitButton);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                loginController.OnLogin(accountInput.getText().toString(),passwordInput.getText().toString());
-                userControllers.login(accountInput.getText().toString(), passwordInput.getText().toString(), LoginActivity.this);
+                userControllers.login(emailInput.getText().toString(), passwordInput.getText().toString(), LoginActivity.this);
             }
         });
 
@@ -77,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.layout_forget_password);
 
-        Button sendingEmail = dialog.findViewById(R.id.emailInput);
+        Button sendingEmail = dialog.findViewById(R.id.sendButton);
         sendingEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,12 +82,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
             }
         });
         dialog.show();
-    }
-
-    @Override
-    public void OnLoginSuccess() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     @Override
