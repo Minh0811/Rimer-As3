@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.SignupView;
+package com.khaiminh.rimer.Views.SignupView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.khaiminh.rimer.Controllers.UserControllers.userControllers;
-import com.khaiminh.rimer.LoginView.LoginActivity;
+import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
+import com.khaiminh.rimer.Views.LoginView.LoginActivity;
 import com.khaiminh.rimer.R;
 
 public class SignupActivity extends AppCompatActivity {
@@ -18,7 +18,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText passwordInput;
     private EditText emailInput;
 
-    userControllers userControllers = new userControllers();
+    UserControllers userControllers = new UserControllers();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

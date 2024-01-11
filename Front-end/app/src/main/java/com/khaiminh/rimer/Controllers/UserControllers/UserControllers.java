@@ -6,26 +6,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
-import com.khaiminh.rimer.LoginView.LoginActivity;
-import com.khaiminh.rimer.MainActivity;
+import com.khaiminh.rimer.Views.LoginView.LoginActivity;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
+import com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 
 import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class userControllers extends AppCompatActivity implements IUserControllers {
+public class UserControllers extends AppCompatActivity implements IUserControllers {
     private RetrofitInterface retrofitInterface;
     private RetrofitControllers retrofitControllers = new RetrofitControllers();
 
@@ -58,7 +51,7 @@ public class userControllers extends AppCompatActivity implements IUserControlle
 
                     Toast.makeText(context, "Logged in", Toast.LENGTH_LONG).show();
 
-                    Intent newIntent = new Intent(context, MainActivity.class);
+                    Intent newIntent = new Intent(context, UserHomeActivity.class);
                     newIntent.putExtra("username", name);
                     context.startActivity(newIntent);
 

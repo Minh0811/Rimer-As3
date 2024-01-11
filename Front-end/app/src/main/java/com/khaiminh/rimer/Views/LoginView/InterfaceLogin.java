@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.LoginView;
+package com.khaiminh.rimer.Views.LoginView;
 
 import android.content.Context;
 

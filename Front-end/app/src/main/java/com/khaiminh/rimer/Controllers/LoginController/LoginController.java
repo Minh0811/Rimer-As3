@@ -1,6 +1,6 @@
 package com.khaiminh.rimer.Controllers.LoginController;
 
-import com.khaiminh.rimer.LoginView.InterfaceLogin;
+import com.khaiminh.rimer.Views.LoginView.InterfaceLogin;
 import com.khaiminh.rimer.Model.UserLogin.UserLogin;
 
 public class LoginController implements ILoginController{

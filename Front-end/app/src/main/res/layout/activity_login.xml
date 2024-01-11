@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginView.LoginActivity">
+    tools:context=".Views.LoginView.LoginActivity">
 
     <ImageView
         android:id="@+id/backgroundView"
@@ -132,7 +132,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginFrameView" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
