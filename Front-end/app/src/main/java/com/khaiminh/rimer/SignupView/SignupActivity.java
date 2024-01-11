@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.khaiminh.rimer.Controllers.UserControllers.userControllers;
 import com.khaiminh.rimer.LoginView.LoginActivity;
 import com.khaiminh.rimer.R;
 
@@ -17,6 +17,9 @@ public class SignupActivity extends AppCompatActivity {
     private EditText accountInput;
     private EditText passwordInput;
     private EditText emailInput;
+
+    userControllers userControllers = new userControllers();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +34,11 @@ public class SignupActivity extends AppCompatActivity {
         registering.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SignupActivity.this, "Register", Toast.LENGTH_LONG).show();
-
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
+//                Toast.makeText(SignupActivity.this, "Register", Toast.LENGTH_LONG).show();
+//
+//                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+//                startActivity(intent);
+                userControllers.signup(accountInput.getText().toString(), emailInput.getText().toString(), passwordInput.getText().toString(), SignupActivity.this);
             }
         });
 

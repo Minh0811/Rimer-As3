@@ -22,7 +22,7 @@ public class LoginController implements ILoginController{
         } else if (numCase == 3) {
             interfaceLogin.OnLoginError("Password requites more than 6 words");
         } else {
-            interfaceLogin.OnLoginSuccess("Login");
+//            interfaceLogin.OnLoginSuccess("Login");
         }
     }
 //    @Override

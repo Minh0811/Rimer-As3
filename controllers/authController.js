@@ -3,6 +3,10 @@ import jwt from "jsonwebtoken";
 
 import User from "../Models/userModel.js";
 import { handleServerError, setJwtCookie } from "../utils/functions.js";
+import { OAuth2Client } from "google-auth-library";
+
+const clientId = process.env.GOOGLE_CLIENT_ID;
+const authClient = new OAuth2Client(clientId)
 
 const register = async (req, res) => {
   try {
@@ -89,6 +93,46 @@ const login = async (req, res) => {
   }
 };
 
+const loginByGoogle = async (req, res) => {
+  try {
+    const { idToken } = req.body;
+    if (idToken) {
+        authClient.verifyIdToken({ idToken, audience: clientId })
+            .then(async response => {
+                const { email_verified, email, name } = response.payload
+                if (email_verified) {
+                    const user = await User.findOne({ email });
+                        if(user){
+                            return res.json({
+                                message: email,
+                                name: user.name,
+                                email: user.email
+                              });
+                        }
+                        else{
+                            let pass = email + clientId
+                            const newUser = new User({
+                                name,
+                                email,
+                                password: pass,
+                            });
+
+                            newUser.save()
+                            
+                            res.status(200).json({
+                                name: newUser.name,
+                                email: newUser.email,
+                            });
+                        }
+                }
+            })
+            .catch(err => { console.log(err) })
+    }
+  } catch (error) {
+    handleServerError(res, error)
+  }
+}
+
 const logout = async (req, res) => {
     try {
         res.cookie('jwt-cookie', "", {
@@ -101,4 +145,4 @@ const logout = async (req, res) => {
         handleServerError(res, error);
     }
 }
-export { register , login, logout};
+export { register , login, loginByGoogle, logout};
