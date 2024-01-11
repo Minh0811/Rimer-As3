@@ -22,10 +22,10 @@
             android:name=".Views.UserViews.UserHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.SignupView.SignupActivity"
+            android:name=".Views.AuthenticationViews.SignupView.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.LoginView.LoginActivity"
+            android:name=".Views.AuthenticationViews.LoginView.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

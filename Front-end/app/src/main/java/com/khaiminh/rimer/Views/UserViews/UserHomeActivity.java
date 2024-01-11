@@ -20,7 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.R;
-import com.khaiminh.rimer.Views.LoginView.LoginActivity;
+import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 
 public class UserHomeActivity extends AppCompatActivity {
     private GoogleSignInOptions gso;
