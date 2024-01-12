@@ -34,11 +34,7 @@ public class SignupActivity extends AppCompatActivity {
         registering.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(SignupActivity.this, "Register", Toast.LENGTH_LONG).show();
-//
-//                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-//                startActivity(intent);
-                userControllers.signup(accountInput.getText().toString(), emailInput.getText().toString(), passwordInput.getText().toString(), SignupActivity.this);
+                userControllers.signup(null, accountInput.getText().toString(), emailInput.getText().toString(), passwordInput.getText().toString(), SignupActivity.this);
             }
         });
 

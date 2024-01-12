@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Model.User;
@@ -68,7 +69,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
     }
 
     @Override
-    public void signup(String name, String email, String password, Context context){
+    public void signup(GoogleSignInAccount acct, String name, String email, String password, Context context){
         retrofitHandle();
 
         HashMap<String, String> map = new HashMap<>();
@@ -81,15 +82,16 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-
                 if (response.code() == 201) {
                     Toast.makeText(context,
                             "Signed up successfully", Toast.LENGTH_LONG).show();
                     Intent newIntent = new Intent(context, LoginActivity.class);
                     context.startActivity(newIntent);
-                } else {
-                    Toast.makeText(context,
-                            response.message(), Toast.LENGTH_LONG).show();
+                } else if (response.code() == 400){
+                    if (acct == null){
+                        Toast.makeText(context,
+                                "Already registered", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
