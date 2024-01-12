@@ -170,7 +170,7 @@ tools:context=".Views.AuthenticationViews.DriverSignupView.DriverSignupActivity"
     app:srcCompat="@drawable/password_icon" />
 
 <Button
-    android:id="@+id/registerButton"
+    android:id="@+id/driverRegisterButton"
     android:layout_width="320dp"
     android:layout_height="56dp"
     android:layout_marginTop="24dp"
@@ -196,10 +196,10 @@ tools:context=".Views.AuthenticationViews.DriverSignupView.DriverSignupActivity"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/driverRegisterButton" />
 
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/driverLoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
