@@ -75,7 +75,7 @@ public class UserHomeActivity extends AppCompatActivity {
         // Check for Google account and set the username
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
-            userControllers.signup(acct.getDisplayName(), acct.getEmail(), "123", this);
+            userControllers.signup(acct, acct.getDisplayName(), acct.getEmail(), ""+acct.getEmail()+acct.getId(), this);
             String personName = acct.getDisplayName();
             navUsername.setText(personName);
         }

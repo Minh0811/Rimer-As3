@@ -16,9 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.khaiminh.rimer.Controllers.LoginController.ILoginController;
 import com.khaiminh.rimer.Controllers.UserControllers.IUserControllers;
-import com.khaiminh.rimer.Controllers.LoginController.LoginController;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.AuthenticationViews.SignupView.SignupActivity;
@@ -27,11 +25,9 @@ import com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
     private EditText passwordInput;
     private EditText emailInput;
-    ILoginController loginController;
     IUserControllers userControllers = new UserControllers();
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +36,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
 
         emailInput = (EditText) findViewById(R.id.emailInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
-
-        loginController = new LoginController(LoginActivity.this);
 
         Button login = (Button) findViewById(R.id.loginSubmitButton);
         login.setOnClickListener(new View.OnClickListener() {
