@@ -102,4 +102,36 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
             }
         });
     }
+    @Override
+    public void driverSignup(String userType, String name, String email, String password, Context context){
+        retrofitHandle();
+
+        HashMap<String, String> map = new HashMap<>();
+
+        map.put("userType", userType); // Add userType to the map
+        map.put("name", name);
+        map.put("email", email);
+        map.put("password", password);
+
+        Call<Void> call = retrofitInterface.executeSignup(map);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 201) {
+                    Toast.makeText(context, "Signed up successfully", Toast.LENGTH_LONG).show();
+                    Intent newIntent = new Intent(context, LoginActivity.class);
+                    context.startActivity(newIntent);
+                } else {
+                    Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(context.getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
 }
