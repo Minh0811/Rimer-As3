@@ -80,7 +80,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
         map.put("email", email);
         map.put("password", password); // Note: For Google Sign-In, this might not be necessary
 
-        Call<Void> call = retrofitInterface.executeSignup(map);
+        Call<Void> call = retrofitInterface.executeUserSignup(map);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -113,7 +113,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
         map.put("email", email);
         map.put("password", password);
 
-        Call<Void> call = retrofitInterface.executeSignup(map);
+        Call<Void> call = retrofitInterface.executeDriverSignup(map);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -132,6 +132,4 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
             }
         });
     }
-
-
 }

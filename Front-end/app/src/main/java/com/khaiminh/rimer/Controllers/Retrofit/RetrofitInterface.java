@@ -11,6 +11,9 @@ import retrofit2.http.POST;
 public interface RetrofitInterface {
     @POST("api/auth/login/")
     Call<User> executeLogin(@Body HashMap<String, String> map);
-    @POST("api/auth/register/")
-    Call<Void> executeSignup(@Body HashMap<String, String> map);
+    @POST("api/auth/register/user")
+    Call<Void> executeUserSignup(@Body HashMap<String, String> map);
+
+    @POST("api/auth/register/driver")
+    Call<Void> executeDriverSignup(@Body HashMap<String, String> map);
 }
