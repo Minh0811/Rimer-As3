@@ -74,34 +74,34 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
 
         HashMap<String, String> map = new HashMap<>();
 
+        // Set userType to "user" for Google Sign-In
+        map.put("userType", "user");
         map.put("name", name);
         map.put("email", email);
-        map.put("password", password);
+        map.put("password", password); // Note: For Google Sign-In, this might not be necessary
 
         Call<Void> call = retrofitInterface.executeSignup(map);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 201) {
-                    Toast.makeText(context,
-                            "Signed up successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Signed up successfully", Toast.LENGTH_LONG).show();
                     Intent newIntent = new Intent(context, LoginActivity.class);
                     context.startActivity(newIntent);
                 } else if (response.code() == 400){
                     if (acct == null){
-                        Toast.makeText(context,
-                                "Already registered", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Already registered", Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(context.getApplicationContext(), t.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(context.getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
+
     @Override
     public void driverSignup(String userType, String name, String email, String password, Context context){
         retrofitHandle();
