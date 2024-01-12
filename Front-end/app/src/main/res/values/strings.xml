@@ -15,4 +15,11 @@
     <string name="email">Email</string>
     <string name="auth_google">Sign in via Google</string>
     <string name="menu_button_description" />
+    <string name="create_user_account" >Create user account:</string>
+    <string name="create_account">Create Account</string>
+    <string name="user_register">User Register</string>
+    <string name="signin">Signin</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="register_a_driver_account">Register a driver account</string>
+    <string name="register_a_user_account">Register a user account</string>
 </resources>
