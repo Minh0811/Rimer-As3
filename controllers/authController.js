@@ -8,11 +8,26 @@ import { OAuth2Client } from "google-auth-library";
 const clientId = process.env.GOOGLE_CLIENT_ID;
 const authClient = new OAuth2Client(clientId)
 
+// Function to register a user
+const registerUser = async (req, res) => {
+  // Set userType to 'user'
+  req.body.userType = 'user';
+  await register(req, res);
+};
+
+
+// Function to register a driver
+const registerDriver = async (req, res) => {
+  // Set userType to 'driver'
+  req.body.userType = 'driver';
+  await register(req, res);
+};
+
 const register = async (req, res) => {
   try {
-    const { email, name, password } = req.body;
+    const { email, name, password, userType } = req.body;
 
-    if (!email || !name || !password) {
+    if (!email || !name || !password || !userType) {
       return res.status(400).json({ message: "Incomplete data." });
     }
 
@@ -26,11 +41,12 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
+     const newUser = await User.create({
+       name,
+       email,
+       password: hashedPassword,
+       userType, // Add this line
+     });
 
     console.log("JWT Secret:", process.env.JWT_SECRET);
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
@@ -145,4 +161,4 @@ const logout = async (req, res) => {
         handleServerError(res, error);
     }
 }
-export { register , login, logout};
+export { registerUser, registerDriver, login, logout };

@@ -14,7 +14,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  userType: {
+    type: String,
+    required: true,
+    enum: ["user", "driver"],
+  },
 });
+
 
 const User = mongoose.model("User", userSchema);
 

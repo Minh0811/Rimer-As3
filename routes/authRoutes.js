@@ -1,10 +1,20 @@
 import express from "express";
-import { register, login, logout } from "../controllers/authController.js";
+import {
+  registerUser,
+  registerDriver,
+  login,
+  logout,
+} from "../controllers/authController.js";
+
 
 const router = express.Router();
-router.post("/register", register);
+
+// Separate registration routes for user and driver
+router.post("/register/user", registerUser);
+router.post("/register/driver", registerDriver);
+
+// Existing login and logout routes
 router.post("/login", login);
-// router.post("/authGoogle", loginByGoogle);
 router.post("/logout", logout);
 
 export default router;

@@ -33,7 +33,7 @@ public class DriverSignupActivity extends AppCompatActivity {
         registering.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userControllers.signup(null, driverAccountInput.getText().toString(), driverPasswordInput.getText().toString(), driverEmailInput.getText().toString(), DriverSignupActivity.this);
+                userControllers.driverSignup("driver", driverAccountInput.getText().toString(), driverPasswordInput.getText().toString(), driverEmailInput.getText().toString(), DriverSignupActivity.this);
             }
         });
 
