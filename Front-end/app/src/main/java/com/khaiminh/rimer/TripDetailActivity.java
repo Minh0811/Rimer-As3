@@ -1,4 +1,4 @@
-package com.example.project;
+package com.khaiminh.rimer;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.project.R;
+import com.khaiminh.rimer.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -25,7 +25,7 @@ public class TripDetailActivity extends FragmentActivity implements OnMapReadyCa
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        ImageView customerImage = findViewById(R.id.customerImage);
+//        ImageView customerImage = findViewById(R.id.customerImage);
         TextView customerName = findViewById(R.id.customerName);
         // Initialize other views here
 

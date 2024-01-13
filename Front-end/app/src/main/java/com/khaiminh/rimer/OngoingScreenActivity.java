@@ -1,11 +1,13 @@
-package com.example.project;
+package com.khaiminh.rimer;
 
+import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.project.R;
+import com.khaiminh.rimer.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
