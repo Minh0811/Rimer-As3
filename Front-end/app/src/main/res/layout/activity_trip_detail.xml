@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
+    <ImageView
+        android:id="@+id/customerImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/map"
+        android:src="@drawable/ic_customer_background" />
+
+    <TextView
+        android:id="@+id/customerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/map"
+        android:text="Customer's name" />
+
+    <!-- Other TextViews for phone number, pickup point, destination, fare, etc. -->
+
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm order"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/rejectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reject Order"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <!-- Other layout elements and styles to match the screenshot provided -->
+</RelativeLayout>
