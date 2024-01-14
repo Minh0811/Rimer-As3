@@ -19,6 +19,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCyQW7KcSGQ6o_4nVMawuht1C7dB-9jxrc"></meta-data>>
         <activity
+            android:name=".Views.AuthenticationViews.DriverSignupView.DriverSignupActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.UserViews.UserHomeActivity"
             android:exported="false" />
         <activity
