@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
+import com.khaiminh.rimer.Views.AuthenticationViews.DriverSignupView.DriverSignupActivity;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.R;
 
@@ -38,13 +39,23 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        Button login = (Button) findViewById(R.id.loginButton);
-        login.setOnClickListener(new View.OnClickListener() {
+        Button loginRedirectBtn = (Button) findViewById(R.id.loginButton);
+        loginRedirectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
+
+        Button driverRegisterRedirectBtn = (Button) findViewById(R.id.driverRegisterRedirectBtn);
+        driverRegisterRedirectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignupActivity.this, DriverSignupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 }

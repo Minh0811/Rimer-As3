@@ -33,15 +33,24 @@ public class DriverSignupActivity extends AppCompatActivity {
         registering.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userControllers.driverSignup("driver", driverAccountInput.getText().toString(), driverPasswordInput.getText().toString(), driverEmailInput.getText().toString(), DriverSignupActivity.this);
+                userControllers.driverSignup("driver", driverAccountInput.getText().toString(), driverEmailInput.getText().toString(), driverPasswordInput.getText().toString(), DriverSignupActivity.this);
             }
         });
 
-        Button login = (Button) findViewById(R.id.driverLoginButton);
-        login.setOnClickListener(new View.OnClickListener() {
+        Button loginRedirectBtn = (Button) findViewById(R.id.driverLoginButton);
+        loginRedirectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DriverSignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button userRegisterRedirectBtn = (Button) findViewById(R.id.userRedirectSignupButton);
+        userRegisterRedirectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DriverSignupActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
