@@ -11,7 +11,7 @@ import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
-import com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
+import com.khaiminh.rimer.Views.UserViews.UserHomeActivity.UserHomeActivity;
 
 import java.util.HashMap;
 

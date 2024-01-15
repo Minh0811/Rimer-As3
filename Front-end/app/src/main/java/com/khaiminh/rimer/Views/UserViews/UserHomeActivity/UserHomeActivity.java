@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.Views.UserViews;
+package com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;

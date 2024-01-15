@@ -15,7 +15,7 @@
     <string name="email">Email</string>
     <string name="auth_google">Sign in via Google</string>
     <string name="menu_button_description" />
-    <string name="create_user_account" >Create user account:</string>
+    <string name="create_user_account">Create user account:</string>
     <string name="create_account">Create Account</string>
     <string name="user_register">User Register</string>
     <string name="signin">Signin</string>
