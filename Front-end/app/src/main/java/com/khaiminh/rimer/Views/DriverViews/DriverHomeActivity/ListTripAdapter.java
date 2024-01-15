@@ -1,4 +1,4 @@
-package com.example.rimer;
+package com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.khaiminh.rimer.R;
 
 public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHolder> {
     @NonNull

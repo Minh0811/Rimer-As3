@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.Views.DriverViews.BookingView;
+package com.khaiminh.rimer.Views.UserViews.BookingView;
 
 import androidx.appcompat.app.AppCompatActivity;
 

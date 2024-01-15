@@ -1,4 +1,4 @@
-package com.example.rimer;
+package com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
