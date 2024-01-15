@@ -7,7 +7,6 @@ import {
 } from "../controllers/authController.js";
 import { auth } from "../middlewares/auth.js"
 
-
 const router = express.Router();
 
 // Separate registration routes for user and driver
