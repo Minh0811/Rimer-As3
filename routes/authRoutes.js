@@ -3,8 +3,9 @@ import {
   registerUser,
   registerDriver,
   login,
-  logout,
+  logout, getUser,
 } from "../controllers/authController.js";
+import { auth } from "../middlewares/auth.js"
 
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.post("/register/driver", registerDriver);
 // Existing login and logout routes
 router.post("/login", login);
 router.post("/logout", logout);
+router.get("/info", auth, getUser);
 
 export default router;

@@ -55,10 +55,14 @@ const register = async (req, res) => {
 
     setJwtCookie(res, token);
 
+    // res.status(201).json({
+    //   _id: newUser._id,
+    //   name: newUser.name,
+    //   email: newUser.email,
+    // });
+
     res.status(201).json({
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
+      token
     });
   } catch (error) {
     handleServerError(res, error);
@@ -161,4 +165,19 @@ const logout = async (req, res) => {
         handleServerError(res, error);
     }
 }
-export { registerUser, registerDriver, login, logout };
+
+const getUser = async(req, res) => {
+  try {
+    const userExists = await User.findOne({ email });
+
+    if (!userExists)
+      return res.status(400).json({ msg: "User does not exist" });
+
+    res.json(userExists);
+
+  } catch (error){
+    handleServerError(res, error);
+  }
+}
+
+export { registerUser, registerDriver, login, logout, getUser };
