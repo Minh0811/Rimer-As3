@@ -17,6 +17,6 @@ public interface RetrofitInterface {
     @POST("api/auth/register/driver")
     Call<Void> executeDriverSignup(@Body HashMap<String, String> map);
 
-    @POST("api/review/submit")
+    @POST("api/reviews/create-review")
     Call<Void> submitReview(@Body HashMap<String, Object> reviewDetails);
 }

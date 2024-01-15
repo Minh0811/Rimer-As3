@@ -8,14 +8,14 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 import com.khaiminh.rimer.R;
-import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
+import com.khaiminh.rimer.Controllers.ReviewControllers.ReviewControllers;
 
 public class UserReviewActivity extends AppCompatActivity {
 
     private RatingBar ratingBar;
     private EditText commentBox;
     private Button submitButton;
-    private RetrofitControllers retrofitControllers;
+    private ReviewControllers reviewControllers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,7 @@ public class UserReviewActivity extends AppCompatActivity {
         commentBox = findViewById(R.id.commentBox);
         submitButton = findViewById(R.id.submitButton);
 
-        retrofitControllers = new RetrofitControllers();
-        retrofitControllers.retrofitController();
+        reviewControllers = new ReviewControllers();
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,8 +39,15 @@ public class UserReviewActivity extends AppCompatActivity {
                     return;
                 }
 
-                // TODO: Implement the API call to submit the review
-                // Example: retrofitControllers.getRetrofitInterface().submitReview(driverId, rating, comment);
+                // TODO: Replace with actual user ID and driver ID
+                String userId = "65a15c84ef49e925afb1187a";
+                String driverId = "65a2e988d97c8b4f65db1d2b";
+
+                reviewControllers.submitReview(userId, driverId, String.valueOf(rating), comment);
+
+                // Optionally, clear the fields after submission
+                ratingBar.setRating(0);
+                commentBox.setText("");
             }
         });
     }
