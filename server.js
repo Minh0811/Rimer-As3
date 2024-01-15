@@ -2,10 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cookiesParser from "cookie-parser";
 import connectDatabase from "./config/database.js";
-import authRoutes from "./routes/authRoutes.js";
-import reviewRoutes from "./routes/reviewRoutes.js";
-
+import authRoutes from "./routes/authRoutes.js"
 import bookingRoutes from "./routes/bookingRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 dotenv.config();
 connectDatabase();
 //Connect to database
