@@ -55,10 +55,14 @@ const register = async (req, res) => {
 
     setJwtCookie(res, token);
 
+    // res.status(201).json({
+    //   _id: newUser._id,
+    //   name: newUser.name,
+    //   email: newUser.email,
+    // });
+
     res.status(201).json({
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
+      token
     });
   } catch (error) {
     handleServerError(res, error);
