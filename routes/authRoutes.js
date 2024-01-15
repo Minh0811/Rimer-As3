@@ -6,7 +6,6 @@ import {
   logout,
 } from "../controllers/authController.js";
 
-
 const router = express.Router();
 
 // Separate registration routes for user and driver

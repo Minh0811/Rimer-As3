@@ -161,4 +161,5 @@ const logout = async (req, res) => {
         handleServerError(res, error);
     }
 }
+
 export { registerUser, registerDriver, login, logout };
