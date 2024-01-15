@@ -20,7 +20,7 @@ import com.khaiminh.rimer.Controllers.UserControllers.IUserControllers;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.AuthenticationViews.SignupView.SignupActivity;
-import com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
+import com.khaiminh.rimer.Views.UserViews.UserHomeActivity.UserHomeActivity;
 
 public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
     private EditText passwordInput;
