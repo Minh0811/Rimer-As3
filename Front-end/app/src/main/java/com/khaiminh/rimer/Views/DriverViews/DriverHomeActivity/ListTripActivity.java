@@ -37,6 +37,7 @@ public class ListTripActivity extends AppCompatActivity {
         tripList.add(new User("Name","Email1","Pass1"));
         tripList.add(new User("Name1","Email","Pass2"));
         tripList.add(new User("Name2","Email4","Pass3"));
+        tripList.add(new User("Name2","Email2","Pass3"));
         return tripList;
     }
 }

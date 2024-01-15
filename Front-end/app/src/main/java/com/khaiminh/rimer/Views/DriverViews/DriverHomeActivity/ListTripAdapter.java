@@ -34,13 +34,13 @@ public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHo
     public void onBindViewHolder(@NonNull ListTripAdapter.ViewHolder holder, int position) {
         User currentTrip = tripList.get(position);
         holder.pickuppointdetail.setText(currentTrip.getName());
-        holder.pickuppointdetail.setText(currentTrip.getEmail());
-        holder.pickuppointdetail.setText(currentTrip.getPassword());
+        holder.destinationdetail.setText(currentTrip.getEmail());
+        holder.statusdetail.setText(currentTrip.getPassword());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return tripList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
