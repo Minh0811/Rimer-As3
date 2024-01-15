@@ -26,7 +26,7 @@ public class ReviewControllers implements IReviewControllers {
         reviewDetails.put("userId", userId);
         reviewDetails.put("driverId", driverId);
         reviewDetails.put("rating", rating);
-        reviewDetails.put("comment", comment);
+        reviewDetails.put("reviewText", comment);
 
         // Check if both rating and comment are empty
         if (rating.isEmpty() && comment.isEmpty()) {
