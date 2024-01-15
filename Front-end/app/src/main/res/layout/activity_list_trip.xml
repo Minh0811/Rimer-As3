@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ListTripActivity"
-    >
+    tools:context=".Views.DriverViews.DriverHomeActivity.ListTripActivity"
+    android:padding="10dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -26,23 +26,49 @@
         tools:targetApi="p">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="403dp"
-            android:layout_height="200dp">
+            android:layout_width="match_parent"
+            android:layout_height="240dp">
+
+            <ImageButton
+                android:id="@+id/driverBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                android:src="@drawable/account_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/notificationBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="5dp"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_popup_reminder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.989"
+                app:layout_constraintStart_toEndOf="@+id/driverBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@android:color/black" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imgdrivercard"
                 android:layout_width="0dp"
                 android:layout_height="120dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 app:cardCornerRadius="250dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/driverBtn">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/driverimage"
                     android:layout_width="102dp"
-                    android:layout_height="104dp"
+                    android:layout_height="108dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
@@ -53,7 +79,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/chicken_roll" />
+                    app:srcCompat="@drawable/imageuser" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -69,8 +95,9 @@
                 android:textSize="25sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/imgdrivercard"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/notificationBtn" />
 
             <TextView
                 android:id="@+id/carplate"
@@ -108,27 +135,31 @@
 
             <Button
                 android:id="@+id/ongoingbtn"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
+                android:background="@drawable/layout_btn"
                 android:text="On going"
-                android:backgroundTint="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/historybtn"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carmodel" />
+                app:layout_constraintTop_toBottomOf="@+id/carmodel"
+                app:layout_constraintVertical_bias="0.828" />
 
             <Button
                 android:id="@+id/historybtn"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="60dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/layout_btn"
                 android:text="History"
-                android:backgroundTint="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carmodel" />
+                app:layout_constraintTop_toBottomOf="@+id/carmodel"
+                app:layout_constraintVertical_bias="0.828" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -139,7 +170,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:text="List of trip awaiting approval"
-        android:textSize="30sp"
+        android:textSize="28sp"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
