@@ -5,6 +5,7 @@ import connectDatabase from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 
+import bookingRoutes from "./routes/bookingRoutes.js";
 dotenv.config();
 connectDatabase();
 //Connect to database
@@ -20,6 +21,5 @@ app.use(cookiesParser());
 
 // Use routes
 app.use("/api/auth", authRoutes);
-app.use('/api/reviews', reviewRoutes); // Use the review routes
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

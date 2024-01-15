@@ -19,6 +19,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: ["user", "driver"],
   },
+  onGoingBooking: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Booking",  
+  },
+  bookingsHistory: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
 });
 
 
