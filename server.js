@@ -22,5 +22,6 @@ app.use(cookiesParser());
 // Use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/booking", bookingRoutes);
+app.use('/api/reviews', reviewRoutes); // Use the review routes
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
