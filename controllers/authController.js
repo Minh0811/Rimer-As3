@@ -166,18 +166,4 @@ const logout = async (req, res) => {
     }
 }
 
-const getUser = async(req, res) => {
-  try {
-    const userExists = await User.findOne({ email });
-
-    if (!userExists)
-      return res.status(400).json({ msg: "User does not exist" });
-
-    res.json(userExists);
-
-  } catch (error){
-    handleServerError(res, error);
-  }
-}
-
-export { registerUser, registerDriver, login, logout, getUser };
+export { registerUser, registerDriver, login, logout };
