@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,43 +17,29 @@
         android:theme="@style/Theme.Rimer"
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
-        <activity
-            android:name=".Views.UserViews.UserReviewActivity.UserReviewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Views.DriverViews.DriverHomeActivity.ListTripActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".Views.UserViews.UserRevewActivity.UserReviewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Views.UserViews.BookingView.BookingActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCyQW7KcSGQ6o_4nVMawuht1C7dB-9jxrc" />
 
         <activity
+            android:name=".Views.UserViews.UserReviewActivity.UserReviewActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Views.DriverViews.DriverHomeActivity.ListTripActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".Views.UserViews.BookingView.BookingActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".Views.AuthenticationViews.DriverSignupView.DriverSignupActivity"
             android:exported="false" />
+
         <activity
             android:name=".Views.UserViews.UserHomeActivity.UserHomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Views.AuthenticationViews.SignupView.SignupActivity"
-            android:exported="false" />
-        <activity android:name=".Views.DriverViews.DriverHomeActivity.ListTripActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".Views.AuthenticationViews.LoginView.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,6 +47,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Views.AuthenticationViews.SignupView.SignupActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".Views.AuthenticationViews.LoginView.LoginActivity"
+            android:exported="false" />
 
     </application>
 
