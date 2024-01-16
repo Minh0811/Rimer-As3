@@ -6,20 +6,19 @@ import { handleServerError, setJwtCookie } from "../utils/functions.js";
 import { OAuth2Client } from "google-auth-library";
 
 const clientId = process.env.GOOGLE_CLIENT_ID;
-const authClient = new OAuth2Client(clientId)
+const authClient = new OAuth2Client(clientId);
 
 // Function to register a user
 const registerUser = async (req, res) => {
   // Set userType to 'user'
-  req.body.userType = 'user';
+  req.body.userType = "user";
   await register(req, res);
 };
-
 
 // Function to register a driver
 const registerDriver = async (req, res) => {
   // Set userType to 'driver'
-  req.body.userType = 'driver';
+  req.body.userType = "driver";
   await register(req, res);
 };
 
@@ -41,12 +40,12 @@ const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, salt);
 
-     const newUser = await User.create({
-       name,
-       email,
-       password: hashedPassword,
-       userType, // Add this line
-     });
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      userType, // Add this line
+    });
 
     console.log("JWT Secret:", process.env.JWT_SECRET);
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
@@ -89,9 +88,9 @@ const login = async (req, res) => {
           .json({ message: "An user is already authenticated" });
       }
 
-      const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1d",
-      })
+      });
 
       setJwtCookie(res, token);
 
@@ -99,10 +98,10 @@ const login = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        userType: user.userType,
       });
-      
     } else {
-        return res.status(401).json({ message: "Invalid email or password"})
+      return res.status(401).json({ message: "Invalid email or password" });
     }
   } catch (error) {
     handleServerError(res, error);
@@ -134,7 +133,7 @@ const login = async (req, res) => {
 //                             });
 
 //                             newUser.save()
-                            
+
 //                             res.status(200).json({
 //                                 name: newUser.name,
 //                                 email: newUser.email,
@@ -150,16 +149,16 @@ const login = async (req, res) => {
 // }
 
 const logout = async (req, res) => {
-    try {
-        res.cookie('jwt-cookie', "", {
-            httpOnly: true,
-            expires: new Date(0)
-        });
+  try {
+    res.cookie("jwt-cookie", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
 
-        res.status(200).json({ message: "User logged out."})
-    } catch (error) {
-        handleServerError(res, error);
-    }
-}
+    res.status(200).json({ message: "User logged out." });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
 
 export { registerUser, registerDriver, login, logout };

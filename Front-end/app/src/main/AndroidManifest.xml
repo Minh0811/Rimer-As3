@@ -32,6 +32,8 @@
         <activity
             android:name=".Views.AuthenticationViews.SignupView.SignupActivity"
             android:exported="false" />
+        <activity android:name=".Views.DriverViews.DriverHomeActivity.ListTripActivity"
+            android:exported="false"/>
         <activity
             android:name=".Views.AuthenticationViews.LoginView.LoginActivity"
             android:exported="true" >

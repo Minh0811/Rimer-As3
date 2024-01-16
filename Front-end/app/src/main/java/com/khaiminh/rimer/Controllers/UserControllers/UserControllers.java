@@ -2,6 +2,7 @@ package com.khaiminh.rimer.Controllers.UserControllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
+import com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity.ListTripActivity;
 import com.khaiminh.rimer.Views.UserViews.UserHomeActivity.UserHomeActivity;
 
 import java.util.HashMap;
@@ -47,15 +49,27 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
                     String name = result.getName();
                     String email = result.getEmail();
                     String password = result.getPassword();
+                    String userType = result.getUserType();
+                    String userId = result.getId();
 
-                    User user = new User(name, email, password);
+                    Log.d("LoginDebug", "User ID: " + userId);
+
+                    User user = new User(name, email, password, userType, userId);
 
                     Toast.makeText(context, "Logged in", Toast.LENGTH_LONG).show();
 
-                    Intent newIntent = new Intent(context, UserHomeActivity.class);
-                    newIntent.putExtra("username", name);
-                    context.startActivity(newIntent);
+                    Intent intent; // Correctly define intent
+                    if (userType.equals("user")) {
+                        intent = new Intent(context, UserHomeActivity.class);
+                    } else if (userType.equals("driver")) {
+                        intent = new Intent(context, ListTripActivity.class);
+                    } else {
+                        return;
+                    }
 
+                    intent.putExtra("username", name);
+                    intent.putExtra("userId", userId); // Pass the user ID
+                    context.startActivity(intent);
                 } else {
                     Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();
                 }
@@ -67,6 +81,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
             }
         });
     }
+
 
     @Override
     public void signup(GoogleSignInAccount acct, String name, String email, String password, Context context){
