@@ -19,7 +19,17 @@
             android:name=".Views.UserViews.UserReviewActivity.UserReviewActivity"
             android:exported="false" />
         <activity
-            android:name=".Views.UserViews.BookingView.BookingActivity"
+            android:name=".Views.DriverViews.DriverHomeActivity.ListTripActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Views.UserViews.UserRevewActivity.UserReviewActivity"
             android:exported="false" />
         <activity
             android:name=".Views.UserViews.BookingView.BookingActivity"
