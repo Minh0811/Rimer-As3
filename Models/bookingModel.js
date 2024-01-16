@@ -13,8 +13,14 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         default: "Appending..."
     },
+    distance: {
+        type: Number,
+        default: 0,
+        require: true
+    },
     price: {
         type: Number,
+        default: 0,
         require: true,
     },
     startPoint: {

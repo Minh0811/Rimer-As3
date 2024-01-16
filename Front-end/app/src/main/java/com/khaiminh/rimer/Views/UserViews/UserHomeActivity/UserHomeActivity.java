@@ -1,32 +1,76 @@
 package com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 
-public class UserHomeActivity extends AppCompatActivity {
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCallback{
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
     private UserControllers userControllers = new UserControllers();
     private DrawerLayout drawerLayout;
+    private GoogleMap mMap;
+    Location currLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    SupportMapFragment mapFragment;
+    LocationRequest locationRequest;
+    double latitude, longitude, end_latitude, end_longtitude;
+    private final static int LOCATION_REQUEST_CODE = 23;
+    private final int FINE_PERMISSION_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +119,58 @@ public class UserHomeActivity extends AppCompatActivity {
         // Check for Google account and set the username
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
-            userControllers.signup(acct, acct.getDisplayName(), acct.getEmail(), ""+acct.getEmail()+acct.getId(), this);
+            userControllers.signup(acct, acct.getDisplayName(), acct.getEmail(), "" + acct.getEmail() + acct.getId(), this);
             String personName = acct.getDisplayName();
             navUsername.setText(personName);
         }
 
         // Set sign out button listener
         signOutBtn.setOnClickListener(v -> signOut());
+
+//        Map logic
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
+
+        SearchView mapSearchView = (SearchView) findViewById(R.id.searchField);
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        mapSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String location = mapSearchView.getQuery().toString();
+                List<Address> addressList = null;
+
+                if (location != null) {
+                    Geocoder geocoder = new Geocoder(UserHomeActivity.this);
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+
+                    Address address = addressList.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(latLng).title(location));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
+
+                    end_latitude = address.getLatitude();
+                    end_longtitude = address.getLongitude();
+                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
+
 
     @Override
     public void onBackPressed() {
@@ -104,5 +192,142 @@ public class UserHomeActivity extends AppCompatActivity {
                 startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
             }
         });
+    }
+
+    private void getLastLocation(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (isGPSEnabled()) {
+
+                LocationServices.getFusedLocationProviderClient(UserHomeActivity.this)
+                        .requestLocationUpdates(locationRequest, new LocationCallback() {
+                            @Override
+                            public void onLocationResult(@NonNull LocationResult locationResult) {
+                                super.onLocationResult(locationResult);
+
+                                LocationServices.getFusedLocationProviderClient(UserHomeActivity.this)
+                                        .removeLocationUpdates(this);
+
+                                if (locationResult != null && locationResult.getLocations().size() >0){
+                                    int index = locationResult.getLocations().size() - 1;
+                                    latitude = locationResult.getLocations().get(index).getLatitude();
+                                    longitude = locationResult.getLocations().get(index).getLongitude();
+                                    end_latitude = latitude;
+                                    end_longtitude = longitude;
+                                    getDistance();
+                                }
+                            }
+                        }, Looper.getMainLooper());
+
+            } else {
+                turnOnGPS();
+            }
+        }
+    }
+
+    public double calculatePrice(double distance){
+        return distance*0.5;
+    }
+
+    private void turnOnGPS() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
+                .checkLocationSettings(builder.build());
+        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+                try {
+                    LocationSettingsResponse response = task.getResult(ApiException.class);
+                    Toast.makeText(UserHomeActivity.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
+                } catch (ApiException e) {
+                    switch (e.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+
+                            try {
+                                ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                                resolvableApiException.startResolutionForResult(UserHomeActivity.this, 2);
+                            } catch (IntentSender.SendIntentException ex) {
+                                ex.printStackTrace();
+                            }
+                            break;
+
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            //Device does not have location
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    private boolean isGPSEnabled() {
+        LocationManager locationManager = null;
+        boolean isEnabled = false;
+        if (locationManager == null) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        }
+        isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return isEnabled;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (isGPSEnabled()) {
+                    getLastLocation();
+                }else {
+                    turnOnGPS();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+        if (ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                LatLng ltlng = new LatLng(location.getLatitude(), location.getLongitude());
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                        ltlng, 20f);
+                mMap.animateCamera(cameraUpdate);
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                mMap.getUiSettings().setCompassEnabled(true);
+            }
+        });
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+
+                mMap.clear();
+                CameraUpdate location = CameraUpdateFactory.newLatLngZoom(
+                        latLng, 20);
+                mMap.animateCamera(location);
+                mMap.addMarker(markerOptions);
+
+                end_latitude = latLng.latitude;
+                end_longtitude = latLng.longitude;
+                getDistance();
+            }
+        });
+    }
+
+    public void getDistance(){
+        float[] results = new float[10];
+        Location.distanceBetween(latitude, longitude, end_latitude, end_longtitude, results);
+        TextView distance = (TextView) findViewById(R.id.distanceValue);
+        distance.setText(String.valueOf(results[0]));
     }
 }
