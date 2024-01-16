@@ -23,11 +23,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="115dp">
 
             <TextView
                 android:id="@+id/pickuppoint"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
@@ -39,21 +39,20 @@
 
             <TextView
                 android:id="@+id/pickuppointdetail"
-                android:layout_width="293dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Tran Hung Dao"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.391"
+                app:layout_constraintHorizontal_bias="0.028"
                 app:layout_constraintStart_toEndOf="@+id/pickuppoint"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/destination"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
@@ -65,7 +64,7 @@
 
             <TextView
                 android:id="@+id/destinationdetail"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="22dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
@@ -73,6 +72,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/destination"
                 app:layout_constraintTop_toBottomOf="@+id/pickuppointdetail" />
 
@@ -81,7 +81,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
                 android:textColor="@color/black"
                 android:text="Status:"
                 android:textSize="16sp"
@@ -106,10 +106,11 @@
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:backgroundTint="@color/lightblue"
                 android:text="View"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.754"
+                app:layout_constraintHorizontal_bias="0.962"
                 app:layout_constraintStart_toEndOf="@+id/statusdetail"
                 app:layout_constraintTop_toBottomOf="@+id/destinationdetail" />
 

@@ -10,9 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 
+import java.util.List;
+
 public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHolder> {
+
+    private List<User> tripList;
+
+    public ListTripAdapter(List<User> tripList) {
+        this.tripList = tripList;
+    }
+
     @NonNull
     @Override
     public ListTripAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -22,12 +32,15 @@ public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ListTripAdapter.ViewHolder holder, int position) {
-
+        User currentTrip = tripList.get(position);
+        holder.pickuppointdetail.setText(currentTrip.getName());
+        holder.destinationdetail.setText(currentTrip.getEmail());
+        holder.statusdetail.setText(currentTrip.getPassword());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return tripList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
