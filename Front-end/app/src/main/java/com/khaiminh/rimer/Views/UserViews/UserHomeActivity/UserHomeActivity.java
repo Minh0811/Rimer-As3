@@ -2,22 +2,22 @@ package com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,6 +29,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,6 +47,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
@@ -47,13 +58,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCallback{
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
     private UserControllers userControllers = new UserControllers();
     private DrawerLayout drawerLayout;
     private GoogleMap mMap;
+    Location currLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    SupportMapFragment mapFragment;
+    LocationRequest locationRequest;
+    double latitude, longitude, end_latitude, end_longtitude;
     private final static int LOCATION_REQUEST_CODE = 23;
+    private final int FINE_PERMISSION_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,17 +128,14 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         signOutBtn.setOnClickListener(v -> signOut());
 
 //        Map logic
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
+
         SearchView mapSearchView = (SearchView) findViewById(R.id.searchField);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
-                    LOCATION_REQUEST_CODE);
-        }
 
         mapSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -141,7 +155,10 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                     Address address = addressList.get(0);
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     mMap.addMarker(new MarkerOptions().position(latLng).title(location));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
+
+                    end_latitude = address.getLatitude();
+                    end_longtitude = address.getLongitude();
                 }
 
                 return false;
@@ -153,6 +170,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
     }
+
 
     @Override
     public void onBackPressed() {
@@ -176,35 +194,104 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
+    private void getLastLocation(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (isGPSEnabled()) {
+
+                LocationServices.getFusedLocationProviderClient(UserHomeActivity.this)
+                        .requestLocationUpdates(locationRequest, new LocationCallback() {
+                            @Override
+                            public void onLocationResult(@NonNull LocationResult locationResult) {
+                                super.onLocationResult(locationResult);
+
+                                LocationServices.getFusedLocationProviderClient(UserHomeActivity.this)
+                                        .removeLocationUpdates(this);
+
+                                if (locationResult != null && locationResult.getLocations().size() >0){
+                                    int index = locationResult.getLocations().size() - 1;
+                                    latitude = locationResult.getLocations().get(index).getLatitude();
+                                    longitude = locationResult.getLocations().get(index).getLongitude();
+                                    end_latitude = latitude;
+                                    end_longtitude = longitude;
+                                    getDistance();
+                                }
+                            }
+                        }, Looper.getMainLooper());
+
+            } else {
+                turnOnGPS();
+            }
+        }
+    }
+
+    public double calculatePrice(double distance){
+        return distance*0.5;
+    }
+
+    private void turnOnGPS() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        builder.setAlwaysShow(true);
+        Task<LocationSettingsResponse> result = LocationServices.getSettingsClient(getApplicationContext())
+                .checkLocationSettings(builder.build());
+        result.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+                try {
+                    LocationSettingsResponse response = task.getResult(ApiException.class);
+                    Toast.makeText(UserHomeActivity.this, "GPS is already tured on", Toast.LENGTH_SHORT).show();
+                } catch (ApiException e) {
+                    switch (e.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+
+                            try {
+                                ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                                resolvableApiException.startResolutionForResult(UserHomeActivity.this, 2);
+                            } catch (IntentSender.SendIntentException ex) {
+                                ex.printStackTrace();
+                            }
+                            break;
+
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            //Device does not have location
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    private boolean isGPSEnabled() {
+        LocationManager locationManager = null;
+        boolean isEnabled = false;
+        if (locationManager == null) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        }
+        isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return isEnabled;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (isGPSEnabled()) {
+                    getLastLocation();
+                }else {
+                    turnOnGPS();
+                }
+            }
+        }
+    }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mMap.setMyLocationEnabled(true);
-
-//        List<Address> addressList = null;
-//        Geocoder geocoder = new Geocoder(HomePageActivity.this);
-//
-//        for (int i = 0; i < allLocations.size(); i++){
-//            try {
-//                addressList = geocoder.getFromLocationName("Le Quang Dinh", 1);
-//            } catch (IOException e){
-//                e.printStackTrace();
-//            }
-//            Address address = addressList.get(i);
-//            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-//            mMap.addMarker(new MarkerOptions().position(latLng).title(allLocations.get(i).getName()));
-//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-//        }
 
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -217,12 +304,10 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 mMap.getUiSettings().setCompassEnabled(true);
             }
         });
-        Location location = mMap.getMyLocation();
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                Toast.makeText(UserHomeActivity.this, "click", Toast.LENGTH_LONG).show();
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
 
@@ -231,7 +316,18 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                         latLng, 20);
                 mMap.animateCamera(location);
                 mMap.addMarker(markerOptions);
+
+                end_latitude = latLng.latitude;
+                end_longtitude = latLng.longitude;
+                getDistance();
             }
         });
+    }
+
+    public void getDistance(){
+        float[] results = new float[10];
+        Location.distanceBetween(latitude, longitude, end_latitude, end_longtitude, results);
+        TextView distance = (TextView) findViewById(R.id.distanceValue);
+        distance.setText(String.valueOf(results[0]));
     }
 }
