@@ -1,4 +1,4 @@
-package com.khaiminh.rimer.Views.UserViews.UserRevewActivity;
+package com.khaiminh.rimer.Views.UserViews.UserReviewActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
