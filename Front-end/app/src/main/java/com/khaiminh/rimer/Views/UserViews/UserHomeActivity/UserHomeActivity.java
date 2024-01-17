@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -287,6 +288,10 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        end_latitude = latitude;
+        end_longtitude = longitude;
+        getDistance();
+
         mMap = googleMap;
         if (ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -324,10 +329,11 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
+    @SuppressLint("DefaultLocale")
     public void getDistance(){
         float[] results = new float[10];
         Location.distanceBetween(latitude, longitude, end_latitude, end_longtitude, results);
         TextView distance = (TextView) findViewById(R.id.distanceValue);
-        distance.setText(String.valueOf(results[0]));
+        distance.setText(String.format("%.1f", results[0]/1000));
     }
 }
