@@ -21,7 +21,7 @@ public class ListTripActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_trip);
 
-        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.listAvailableDrivers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<User> tripList = getTripData();
