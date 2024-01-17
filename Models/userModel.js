@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
   },
   onGoingBooking: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Booking",  
+    ref: "Booking", 
+    defautl: null, 
   },
   bookingsHistory: [
     {

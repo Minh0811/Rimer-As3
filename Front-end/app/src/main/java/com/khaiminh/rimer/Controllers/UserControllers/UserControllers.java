@@ -5,17 +5,21 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
+import com.khaiminh.rimer.Model.Booking;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity.ListTripActivity;
 import com.khaiminh.rimer.Views.UserViews.UserHomeActivity.UserHomeActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +35,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
     }
 
     @Override
-    public void login(String email, String password, Context context){
+    public void login(String email, String password, Context context, ArrayList<User> driversList){
         retrofitHandle();
 
         HashMap<String, String> map = new HashMap<>();
@@ -51,10 +55,13 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
                     String password = result.getPassword();
                     String userType = result.getUserType();
                     String userId = result.getId();
+                    Booking onGoingBooking = result.getOnGoingBooking();
+                    List<Booking> bookingHistory = result.getBookingHistory();
+
 
                     Log.d("LoginDebug", "User ID: " + userId);
 
-                    User user = new User(name, email, password, userType, userId);
+                    User user = new User(name, email, password, userType, userId, onGoingBooking, bookingHistory);
 
                     Toast.makeText(context, "Logged in", Toast.LENGTH_LONG).show();
 
@@ -69,6 +76,8 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
 
                     intent.putExtra("username", name);
                     intent.putExtra("userId", userId); // Pass the user ID
+                    intent.putExtra("currUser", user);
+                    intent.putExtra("driversList", driversList);
                     context.startActivity(intent);
                 } else {
                     Toast.makeText(context, response.message(), Toast.LENGTH_LONG).show();

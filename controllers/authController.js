@@ -161,4 +161,19 @@ const logout = async (req, res) => {
   }
 };
 
-export { registerUser, registerDriver, login, logout };
+const getAllDrivers = async (req, res) => {
+  try {
+    const allDrivers = [];
+    const allUsers = await User.find();
+    allUsers.forEach(user => {
+      if (user.userType == "driver") {
+        allDrivers.push(user);
+      }
+    });
+    res.status(200).json(allDrivers);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export { registerUser, registerDriver, login, logout, getAllDrivers };

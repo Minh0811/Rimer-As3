@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -51,10 +52,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
+import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
+import com.khaiminh.rimer.Views.UserViews.BookingView.BookingActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,13 +68,16 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
     private UserControllers userControllers = new UserControllers();
     private DrawerLayout drawerLayout;
     private GoogleMap mMap;
-    Location currLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     SupportMapFragment mapFragment;
     LocationRequest locationRequest;
-    double latitude, longitude, end_latitude, end_longtitude;
+    ArrayList<User> driverList;
+    double latitude, longitude, end_latitude, end_longitude, distanceValue, priceValue;
     private final static int LOCATION_REQUEST_CODE = 23;
     private final int FINE_PERMISSION_CODE = 1;
+
+
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +121,9 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         if (intent.getExtras() != null) {
             String username = intent.getStringExtra("username");
             navUsername.setText(username);
+            user = (User) intent.getSerializableExtra("currUser");
+            driverList = (ArrayList<User>) intent.getSerializableExtra("driversList");
         }
-
         // Check for Google account and set the username
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
@@ -158,7 +166,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
 
                     end_latitude = address.getLatitude();
-                    end_longtitude = address.getLongitude();
+                    end_longitude = address.getLongitude();
                 }
 
                 return false;
@@ -167,6 +175,24 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        // Button confirm onclick
+        Button confirmButton = (Button) findViewById(R.id.confirmButton);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(UserHomeActivity.this, BookingActivity.class);
+                newIntent.putExtra("distance", String.valueOf(distanceValue));
+                newIntent.putExtra("price", String.valueOf(priceValue));
+                newIntent.putExtra("lat", latitude);
+                newIntent.putExtra("long", longitude);
+                newIntent.putExtra("endlat", end_latitude);
+                newIntent.putExtra("endlong", end_longitude);
+                newIntent.putExtra("user", user);
+                newIntent.putExtra("drivers", driverList);
+                startActivityForResult(newIntent, 900);
             }
         });
     }
@@ -212,7 +238,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                                     latitude = locationResult.getLocations().get(index).getLatitude();
                                     longitude = locationResult.getLocations().get(index).getLongitude();
                                     end_latitude = latitude;
-                                    end_longtitude = longitude;
+                                    end_longitude = longitude;
                                     getDistance();
                                 }
                             }
@@ -287,6 +313,10 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
+        end_latitude = latitude;
+        end_longitude = longitude;
+        getDistance();
+
         mMap = googleMap;
         if (ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(UserHomeActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -318,16 +348,21 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 mMap.addMarker(markerOptions);
 
                 end_latitude = latLng.latitude;
-                end_longtitude = latLng.longitude;
+                end_longitude = latLng.longitude;
                 getDistance();
             }
         });
     }
 
+    @SuppressLint("DefaultLocale")
     public void getDistance(){
         float[] results = new float[10];
-        Location.distanceBetween(latitude, longitude, end_latitude, end_longtitude, results);
+        Location.distanceBetween(latitude, longitude, end_latitude, end_longitude, results);
         TextView distance = (TextView) findViewById(R.id.distanceValue);
-        distance.setText(String.valueOf(results[0]));
+        TextView price = (TextView) findViewById(R.id.priceValue);
+        distanceValue = results[0]/1000;
+        priceValue = calculatePrice(distanceValue);
+        distance.setText(String.format("%.1f", results[0]/1000));
+        price.setText(String.format("%.1f", calculatePrice(results[0]/1000)));
     }
 }
