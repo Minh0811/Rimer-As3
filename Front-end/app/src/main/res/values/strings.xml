@@ -22,4 +22,9 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="register_a_driver_account">Register a driver account</string>
     <string name="register_a_user_account">Register a user account</string>
+    <string name="driver_picture" />
+    <string name="waiting_for_driver_s_confirmation">Waiting for Driver\'s Confirmation...</string>
+    <string name="cancel_ride">Cancel Ride</string>
+    <string name="you_have_a_new_request">You have a new request!!</string>
+    <string name="accept_ride" >Accept ride</string>>
 </resources>

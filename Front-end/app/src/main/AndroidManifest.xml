@@ -17,6 +17,15 @@
         android:theme="@style/Theme.Rimer"
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
+        <activity
+            android:name=".Views.DriverViews.TripConfirmationActivity.TripConfirmationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.UserViews.TripWaitingConfirmationActivity.TripWaitingConfirmationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.UserViews.TripDetailActivity.TripDetailActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -25,19 +34,15 @@
         <activity
             android:name=".Views.UserViews.UserReviewActivity.UserReviewActivity"
             android:exported="false" />
-
         <activity
             android:name=".Views.DriverViews.DriverHomeActivity.ListTripActivity"
             android:exported="false" />
-
         <activity
             android:name=".Views.UserViews.BookingView.BookingActivity"
             android:exported="false" />
-
         <activity
             android:name=".Views.AuthenticationViews.DriverSignupView.DriverSignupActivity"
             android:exported="false" />
-
         <activity
             android:name=".Views.UserViews.UserHomeActivity.UserHomeActivity"
             android:exported="true" >
@@ -47,15 +52,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Views.AuthenticationViews.SignupView.SignupActivity"
             android:exported="false" />
-            
         <activity
             android:name=".Views.AuthenticationViews.LoginView.LoginActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>
