@@ -58,6 +58,7 @@ import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Views.UserViews.BookingView.BookingActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -70,9 +71,11 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
     FusedLocationProviderClient fusedLocationProviderClient;
     SupportMapFragment mapFragment;
     LocationRequest locationRequest;
+    ArrayList<User> driverList;
     double latitude, longitude, end_latitude, end_longitude, distanceValue, priceValue;
     private final static int LOCATION_REQUEST_CODE = 23;
     private final int FINE_PERMISSION_CODE = 1;
+
 
     User user;
 
@@ -119,6 +122,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
             String username = intent.getStringExtra("username");
             navUsername.setText(username);
             user = (User) intent.getSerializableExtra("currUser");
+            driverList = (ArrayList<User>) intent.getSerializableExtra("driversList");
         }
         // Check for Google account and set the username
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
@@ -187,6 +191,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 newIntent.putExtra("endlat", end_latitude);
                 newIntent.putExtra("endlong", end_longitude);
                 newIntent.putExtra("user", user);
+                newIntent.putExtra("drivers", driverList);
                 startActivityForResult(newIntent, 900);
             }
         });

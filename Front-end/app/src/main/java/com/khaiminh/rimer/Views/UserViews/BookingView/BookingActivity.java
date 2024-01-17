@@ -21,7 +21,6 @@ public class BookingActivity extends AppCompatActivity {
     User user;
     ArrayList<User> drivers = new ArrayList<>();
     double distance, price;
-    UserControllers userControllers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +31,7 @@ public class BookingActivity extends AppCompatActivity {
         user = (User) intent.getSerializableExtra("user");
         distance = Double.parseDouble(intent.getStringExtra("distance"));
         price = Double.parseDouble(intent.getStringExtra("price"));
-        userControllers = new UserControllers();
-        drivers = userControllers.getListDrivers();
+        drivers = (ArrayList<User>) intent.getSerializableExtra("drivers");
 
         assert user != null;
         Toast.makeText(this, ""+drivers.size(), Toast.LENGTH_SHORT).show();

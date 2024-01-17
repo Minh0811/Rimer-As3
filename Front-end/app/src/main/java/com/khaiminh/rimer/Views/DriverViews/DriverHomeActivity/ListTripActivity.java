@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListTripActivity extends AppCompatActivity {
-
     RecyclerView recyclerView;
     ListTripAdapter listTripAdapter;
 
