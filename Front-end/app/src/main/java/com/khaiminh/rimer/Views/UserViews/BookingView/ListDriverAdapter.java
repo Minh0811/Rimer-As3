@@ -1,6 +1,7 @@
 package com.khaiminh.rimer.Views.UserViews.BookingView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.UserViews.TripWaitingConfirmationActivity.TripWaitingConfirmationActivity;
 
 import java.util.List;
 
@@ -60,6 +62,15 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
             super(itemView);
             name = itemView.findViewById(R.id.drivername);
             price = itemView.findViewById(R.id.farerideinfo);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newIntent = new Intent(itemView.getContext(), TripWaitingConfirmationActivity.class);
+                    newIntent.putExtra("driverName", name.getText());
+                    itemView.getContext().startActivity(newIntent);
+                }
+            });
         }
     }
 }
