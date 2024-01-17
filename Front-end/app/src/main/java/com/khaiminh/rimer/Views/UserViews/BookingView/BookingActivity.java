@@ -1,6 +1,8 @@
 package com.khaiminh.rimer.Views.UserViews.BookingView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +35,12 @@ public class BookingActivity extends AppCompatActivity {
         price = Double.parseDouble(intent.getStringExtra("price"));
         drivers = (ArrayList<User>) intent.getSerializableExtra("drivers");
 
-        assert user != null;
-        Toast.makeText(this, ""+drivers.size(), Toast.LENGTH_SHORT).show();
+        RecyclerView recyclerView = findViewById(R.id.listAvailableDrivers);
+        ListDriverAdapter driverAdapter = new ListDriverAdapter();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(BookingActivity.this, RecyclerView.VERTICAL, false));
+
+        driverAdapter.setData(BookingActivity.this, drivers, R.layout.driver_available, price);
+        recyclerView.setAdapter(driverAdapter);
     }
 }
