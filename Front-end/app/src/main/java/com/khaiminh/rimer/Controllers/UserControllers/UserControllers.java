@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -16,6 +17,7 @@ import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity.ListTripActivity;
 import com.khaiminh.rimer.Views.UserViews.UserHomeActivity.UserHomeActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -152,5 +154,34 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
                 Toast.makeText(context.getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+    public ArrayList<User> getListDrivers() {
+        final ArrayList<User> allDrivers = new ArrayList<>();
+        Call<List<User>> call = retrofitInterface.executeListDrivers();
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
+                List<User> driversList = response.body();
+                for (int i = 0; i < driversList.size(); i++) {
+                    String name = driversList.get(i).getName();
+                    String email = driversList.get(i).getEmail();
+                    String password = driversList.get(i).getPassword();
+                    String userType = driversList.get(i).getUserType();
+                    String userId = driversList.get(i).getId();
+                    Booking onGoingBooking = driversList.get(i).getOnGoingBooking();
+                    List<Booking> bookingHistory = driversList.get(i).getBookingHistory();
+
+                    User driver = new User(name, email, password, userType, userId, onGoingBooking, bookingHistory);
+                    allDrivers.add(driver);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return allDrivers;
     }
 }

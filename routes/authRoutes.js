@@ -4,6 +4,7 @@ import {
   registerDriver,
   login,
   logout,
+  getAllDrivers,
 } from "../controllers/authController.js";
 
 const router = express.Router();
@@ -15,5 +16,8 @@ router.post("/register/driver", registerDriver);
 // Existing login and logout routes
 router.post("/login", login);
 router.post("/logout", logout);
+
+// Get all drivers
+router.get("/getDrivers", getAllDrivers)
 
 export default router;
