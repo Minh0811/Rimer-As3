@@ -34,10 +34,10 @@ public class ListTripActivity extends AppCompatActivity {
     private List<User> getTripData() {
         List<User> tripList = new ArrayList<>();
         // Example: tripList.add(new Trip("DriverName", "CarPlate", ...));
-        tripList.add(new User("Name","Email1","Pass1", "user", "1"));
-        tripList.add(new User("Name1","Email","Pass2", "user", "1"));
-        tripList.add(new User("Name2","Email4","Pass3", "user", "1"));
-        tripList.add(new User("Name2","Email2","Pass3", "user", "1"));
+//        tripList.add(new User("Name","Email1","Pass1", "user", "1"));
+//        tripList.add(new User("Name1","Email","Pass2", "user", "1"));
+//        tripList.add(new User("Name2","Email4","Pass3", "user", "1"));
+//        tripList.add(new User("Name2","Email2","Pass3", "user", "1"));
         return tripList;
     }
 }

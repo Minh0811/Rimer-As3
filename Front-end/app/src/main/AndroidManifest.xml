@@ -45,6 +45,12 @@
             android:exported="false" />
         <activity
             android:name=".Views.UserViews.UserHomeActivity.UserHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.AuthenticationViews.SignupView.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.AuthenticationViews.LoginView.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,12 +58,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Views.AuthenticationViews.SignupView.SignupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Views.AuthenticationViews.LoginView.LoginActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
