@@ -10,4 +10,5 @@ router.get("/", getAllBookings);
 router.get("/:id", getABooking);
 router.delete("/:id", deleteBooking);
 router.get("/driver/:driverId", getDriverBookings);
+
 export default router;

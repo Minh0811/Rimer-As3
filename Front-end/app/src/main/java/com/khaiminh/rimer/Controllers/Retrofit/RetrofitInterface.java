@@ -6,6 +6,8 @@ import com.khaiminh.rimer.Model.Booking;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -39,4 +41,13 @@ public interface RetrofitInterface {
     // Method to delete a booking
     @DELETE("api/booking/{bookingId}")
     Call<Void> deleteBooking(@Path("bookingId") String bookingId);
+
+    @POST("/updateName")
+    Call<ResponseBody> updateName(@Body RequestBody body);
+
+    @POST("/updateEmail")
+    Call<ResponseBody> updateEmail(@Body RequestBody body);
+
+    @POST("/updatePassword")
+    Call<ResponseBody> updatePassword(@Body RequestBody body);
 }
