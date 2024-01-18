@@ -6,6 +6,7 @@ import {
   logout,
   getAllDrivers,
 } from "../controllers/authController.js";
+import { getDriverBookings } from '../controllers/bookingController.js';
 
 const router = express.Router();
 
@@ -19,5 +20,8 @@ router.post("/logout", logout);
 
 // Get all drivers
 router.get("/getDrivers", getAllDrivers)
+
+// Route to get bookings for a specific driver
+router.get('/driver/:driverId', getDriverBookings);
 
 export default router;

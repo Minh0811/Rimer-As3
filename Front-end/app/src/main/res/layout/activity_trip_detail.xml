@@ -33,7 +33,7 @@
             android:id="@+id/driverPicture"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/account_icon"
+            android:src="@drawable/imageuser"
             android:scaleType="centerCrop"
             android:contentDescription="@string/driver_picture"
             android:layout_gravity="center_vertical" />

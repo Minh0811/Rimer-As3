@@ -51,7 +51,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/chicken_roll" />
+                    app:srcCompat="@drawable/imageuser" />
             </androidx.cardview.widget.CardView>
 
             <TextView

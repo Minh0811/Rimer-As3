@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.khaiminh.rimer.Model.Booking;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 
@@ -17,11 +18,13 @@ import java.util.List;
 
 public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHolder> {
 
-    private List<User> tripList;
 
-    public ListTripAdapter(List<User> tripList) {
-        this.tripList = tripList;
+    private List<Booking> bookingList;
+
+    public ListTripAdapter(List<Booking> bookingList) {
+        this.bookingList = bookingList;
     }
+
 
     @NonNull
     @Override
@@ -32,35 +35,36 @@ public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ListTripAdapter.ViewHolder holder, int position) {
-        User currentTrip = tripList.get(position);
-        holder.pickuppointdetail.setText(currentTrip.getName());
-        holder.destinationdetail.setText(currentTrip.getEmail());
-        holder.statusdetail.setText(currentTrip.getPassword());
+        Booking currentBooking = bookingList.get(position);
+        // Bind booking details to the views
+        holder.pickuppointdetail.setText(currentBooking.getStartPoint());
+        holder.destinationdetail.setText(currentBooking.getEndPoint());
+        holder.statusdetail.setText(currentBooking.getStatus());
     }
 
     @Override
     public int getItemCount() {
-        return tripList.size();
+        return bookingList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView drivername, carplate, carmodel, pickuppointdetail, destinationdetail, statusdetail;
-
         Button ongoingbtn, historybtn, viewbtn;
-
         ImageView driverimg;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             drivername = itemView.findViewById(R.id.drivername);
             carplate = itemView.findViewById(R.id.carplate);
             carmodel = itemView.findViewById(R.id.carmodel);
             pickuppointdetail = itemView.findViewById(R.id.pickuppointdetail);
-            destinationdetail = itemView.findViewById((R.id.destinationdetail));
+            destinationdetail = itemView.findViewById(R.id.destinationdetail);
             statusdetail = itemView.findViewById(R.id.statusdetail);
             ongoingbtn = itemView.findViewById(R.id.ongoingbtn);
             historybtn = itemView.findViewById(R.id.historybtn);
             viewbtn = itemView.findViewById(R.id.viewbtn);
             driverimg = itemView.findViewById(R.id.driverimage);
+            // Initialize other views in the item if there are any
         }
     }
 }
