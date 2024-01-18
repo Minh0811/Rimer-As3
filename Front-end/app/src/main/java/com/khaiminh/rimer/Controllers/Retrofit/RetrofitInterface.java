@@ -8,8 +8,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RetrofitInterface {
@@ -29,4 +31,12 @@ public interface RetrofitInterface {
     // Method to fetch bookings for a specific driver
     @GET("api/booking/driver/{driverId}")
     Call<List<Booking>> getDriverBookings(@Path("driverId") String driverId);
+
+    // Method to update booking status
+    @PUT("api/booking/{bookingId}")
+    Call<Void> updateBookingStatus(@Path("bookingId") String bookingId, @Body HashMap<String, String> map);
+
+    // Method to delete a booking
+    @DELETE("api/booking/{bookingId}")
+    Call<Void> deleteBooking(@Path("bookingId") String bookingId);
 }
