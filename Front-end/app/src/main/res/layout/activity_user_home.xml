@@ -15,7 +15,7 @@
         <!-- Guideline to mark one third -->
         <View
             android:id="@+id/top_colored_section"
-            android:layout_width="412dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="#222233"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
