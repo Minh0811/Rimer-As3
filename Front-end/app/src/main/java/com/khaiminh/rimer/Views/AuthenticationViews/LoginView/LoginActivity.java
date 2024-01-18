@@ -137,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLogin{
                     String password = driversList.get(i).getPassword();
                     String userType = driversList.get(i).getUserType();
                     String userId = driversList.get(i).getId();
-                    Booking onGoingBooking = driversList.get(i).getOnGoingBooking();
+                    String onGoingBooking = driversList.get(i).getOnGoingBooking();
                     List<Booking> bookingHistory = driversList.get(i).getBookingHistory();
 
                     User driver = new User(name, email, password, userType, userId, onGoingBooking, bookingHistory);

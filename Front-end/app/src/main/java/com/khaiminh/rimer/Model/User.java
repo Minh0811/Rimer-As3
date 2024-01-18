@@ -10,10 +10,10 @@ public class User implements Serializable {
     private String password;
     private String userType;
     private String _id;
-    private Booking onGoingBooking;
+    private String onGoingBooking;
     private List<Booking> bookingHistory;
 
-    public User(String name, String email, String password, String userType, String _id, Booking onGoingBooking, List<Booking> bookingHistory) {
+    public User(String name, String email, String password, String userType, String _id, String onGoingBooking, List<Booking> bookingHistory) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -38,7 +38,7 @@ public class User implements Serializable {
     public String getId() {
         return _id;
     }
-    public Booking getOnGoingBooking() {
+    public String getOnGoingBooking() {
         return onGoingBooking;
     }
     public List<Booking> getBookingHistory() {
