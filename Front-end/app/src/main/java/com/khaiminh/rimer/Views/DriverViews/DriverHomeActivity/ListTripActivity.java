@@ -14,6 +14,7 @@ import com.khaiminh.rimer.Model.Booking;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
@@ -61,15 +62,24 @@ public class ListTripActivity extends AppCompatActivity {
             public void onResponse(Call<List<Booking>> call, Response<List<Booking>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Booking> bookingList = response.body();
+                    Log.d("ListTripActivity", "Number of bookings fetched: " + bookingList.size());
 
                     listTripAdapter = new ListTripAdapter(bookingList);
                     recyclerView.setAdapter(listTripAdapter);
+                } else {
+                    Log.d("ListTripActivity", "Response not successful or empty body! Response code: " + response.code());
+                    try {
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "null";
+                        Log.d("ListTripActivity", "Error body: " + errorBody);
+                    } catch (IOException e) {
+                        Log.e("ListTripActivity", "Error reading error body: " + e.getMessage());
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Booking>> call, Throwable t) {
-                // Handle failure
+                Log.e("ListTripActivity", "Error fetching bookings: " + t.getMessage());
             }
         });
     }
