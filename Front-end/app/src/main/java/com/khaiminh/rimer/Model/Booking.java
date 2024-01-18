@@ -3,6 +3,7 @@ package com.khaiminh.rimer.Model;
 import java.io.Serializable;
 
 public class Booking implements Serializable {
+    private String id;
     private String userId;
     private String driverId;
     private String status;
@@ -11,7 +12,8 @@ public class Booking implements Serializable {
     private String startPoint;
     private String endPoint;
 
-    public Booking(String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint) {
+    public Booking(String id,String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint) {
+        this.id = id;
         this.userId = userId;
         this.driverId = driverId;
         this.status = status;
@@ -20,7 +22,13 @@ public class Booking implements Serializable {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getUserId() {
         return userId;
     }

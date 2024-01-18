@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
+import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.R;
 
 public class TripConfirmationActivity extends AppCompatActivity {
@@ -15,6 +17,8 @@ public class TripConfirmationActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView tvWaitingForConfirmation;
     private Button btnAcceptRide, btnCancelRide;
+    private String bookingId;
+    private RetrofitInterface retrofitInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +32,38 @@ public class TripConfirmationActivity extends AppCompatActivity {
         btnCancelRide = findViewById(R.id.btnCancelRide);
 
         // Set up the Accept Ride button click listener
-        btnAcceptRide.setOnClickListener(new View.OnClickListener() {
+        bookingId = getIntent().getStringExtra("BOOKING_ID");
+
+        // Initialize Retrofit
+        RetrofitControllers retrofitControllers = new RetrofitControllers();
+        retrofitControllers.retrofitController();
+        retrofitInterface = retrofitControllers.getRetrofitInterface();
+
+        Button buttonConfirm = findViewById(R.id.btnAcceptRide);
+        Button buttonCancel = findViewById(R.id.btnCancelRide);
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the accept ride action
-                acceptRide();
+                updateBookingStatus(bookingId, "ongoing");
             }
         });
 
-        // Set up the Cancel Ride button click listener
-        btnCancelRide.setOnClickListener(new View.OnClickListener() {
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the cancel ride action
-                cancelRide();
+                deleteBooking(bookingId);
             }
         });
     }
 
-    private void acceptRide() {
-        // TODO: Implement what happens when the ride is accepted
-        // For example, notify the backend server, show a message to the user, etc.
+    private void updateBookingStatus(String bookingId, String newStatus) {
+        // Implement the logic to update the booking status
+        // Make a network request to your backend to update the status of the booking
     }
 
-    private void cancelRide() {
-        // TODO: Implement what happens when the ride is cancelled
-        // For example, notify the backend server, show a message to the user, etc.
-
-        // Optionally, close the activity
-        finish();
+    private void deleteBooking(String bookingId) {
+        // Implement the logic to delete the booking
+        // Make a network request to your backend to delete the booking
     }
 }
