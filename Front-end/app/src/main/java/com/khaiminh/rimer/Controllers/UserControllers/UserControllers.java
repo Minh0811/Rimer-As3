@@ -55,7 +55,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
                     String password = result.getPassword();
                     String userType = result.getUserType();
                     String userId = result.getId();
-                    Booking onGoingBooking = result.getOnGoingBooking();
+                    String onGoingBooking = result.getOnGoingBooking();
                     List<Booking> bookingHistory = result.getBookingHistory();
 
                     Log.d("LoginDebug", "User ID: " + userId);
