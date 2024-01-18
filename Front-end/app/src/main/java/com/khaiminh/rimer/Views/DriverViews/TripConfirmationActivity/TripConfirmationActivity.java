@@ -101,7 +101,8 @@ public class TripConfirmationActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(TripConfirmationActivity.this, "Booking deleted successfully", Toast.LENGTH_SHORT).show();
-                    // Optionally, close the activity or navigate the user away
+                    // Close the activity and return to the previous one
+                    finish();
                 } else {
                     Toast.makeText(TripConfirmationActivity.this, "Failed to delete booking", Toast.LENGTH_SHORT).show();
                 }
@@ -113,5 +114,6 @@ public class TripConfirmationActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

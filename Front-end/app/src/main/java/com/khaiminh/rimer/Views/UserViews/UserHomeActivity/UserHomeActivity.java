@@ -334,6 +334,8 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 mMap.animateCamera(cameraUpdate);
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                 mMap.getUiSettings().setCompassEnabled(true);
+                latitude = ltlng.latitude;
+                longitude = ltlng.longitude;
             }
         });
 
@@ -359,12 +361,13 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
     @SuppressLint("DefaultLocale")
     public void getDistance(){
         float[] results = new float[10];
+//        Location.distanceBetween(10.7789, 106.6983, 10.7290, 106.6985, results);
         Location.distanceBetween(latitude, longitude, end_latitude, end_longitude, results);
         TextView distance = (TextView) findViewById(R.id.distanceValue);
         TextView price = (TextView) findViewById(R.id.priceValue);
-        distanceValue = results[0]/100000;
+        distanceValue = results[0]/1000;
         priceValue = calculatePrice(distanceValue);
-        distance.setText(String.format("%.1f", distanceValue));
-        price.setText(String.format("%.1f", calculatePrice(priceValue)));
+        distance.setText(String.format("%.2f", distanceValue));
+        price.setText(String.format("%.2f", priceValue));
     }
 }
