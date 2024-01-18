@@ -1,6 +1,7 @@
 package com.khaiminh.rimer.Controllers.Retrofit;
 
 import com.khaiminh.rimer.Model.User;
+import com.khaiminh.rimer.Model.Booking;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface RetrofitInterface {
     @POST("api/auth/login/")
@@ -23,4 +25,8 @@ public interface RetrofitInterface {
     Call<Void> createNewBooking(@Body HashMap<String, Object> map);
     @GET("api/auth/getDrivers")
     Call<List<User>> executeListDrivers();
+
+    // Method to fetch bookings for a specific driver
+    @GET("api/booking/driver/{driverId}")
+    Call<List<Booking>> getDriverBookings(@Path("driverId") String driverId);
 }

@@ -65,4 +65,22 @@ const deleteBooking = async (req, res) => {
   }
 };
 
-export {createBooking, getAllBookings, getABooking, updateBooking, deleteBooking};
+// GET all bookings for a specific driver
+const getDriverBookings = async (req, res) => {
+  try {
+    const driverId = req.params.driverId;
+    const bookings = await Booking.find({ driver: driverId }).populate('user');
+    res.status(200).json(bookings);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+export {
+  getDriverBookings,
+  createBooking,
+  getAllBookings,
+  getABooking,
+  updateBooking,
+  deleteBooking,
+};
