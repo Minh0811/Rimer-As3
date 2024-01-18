@@ -96,9 +96,9 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         // Set navigation item selection listener
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_item1) {
+            if (id == R.id.bookingHistory) {
                 // Handle action for item 1
-            } else if (id == R.id.nav_item2) {
+            } else if (id == R.id.onGoingBooking) {
                 // Handle action for item 2
             }
             drawerLayout.closeDrawer(GravityCompat.START);

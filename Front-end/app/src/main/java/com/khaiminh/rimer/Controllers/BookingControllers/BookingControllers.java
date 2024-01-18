@@ -38,7 +38,7 @@ public class BookingControllers implements IBookingControllers{
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Create booking", "Create successfully.");
+                    Log.d("Create booking", "Create successfully." + response.message());
                 } else {
                     Log.e("Create booking", "Failed to create. Response code: " + response.code());
                 }

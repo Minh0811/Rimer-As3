@@ -10,8 +10,9 @@ public class Booking implements Serializable {
     private double price;
     private String startPoint;
     private String endPoint;
+    private String _id;
 
-    public Booking(String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint) {
+    public Booking(String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint, String _id) {
         this.userId = userId;
         this.driverId = driverId;
         this.status = status;
@@ -19,6 +20,7 @@ public class Booking implements Serializable {
         this.price = price;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+        this._id = _id;
     }
 
     public String getUserId() {
@@ -71,6 +73,9 @@ public class Booking implements Serializable {
 
     public String getEndPoint() {
         return endPoint;
+    }
+    public String getId() {
+        return _id;
     }
 
     public void setEndPoint(String endPoint) {

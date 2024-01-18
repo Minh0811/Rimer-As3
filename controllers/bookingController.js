@@ -14,7 +14,7 @@ const createBooking = async (req, res) => {
         const driver = User.findById(req.body.driver);
         await driver.updateOne({ $push: { onGoingBooking: savedBooking._id } });
       }
-      res.status(200).json(savedBooking);
+      res.status(200).message(savedBooking);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -76,8 +76,20 @@ const getDriverBookings = async (req, res) => {
   }
 };
 
+// GET all bookings for a specific driver
+const getUserAppendingBooking = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const bookings = await Booking.find({ user: userId, status: "Appending..." }).populate('user');
+    res.status(200).json(bookings);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 export {
   getDriverBookings,
+  getUserAppendingBooking,
   createBooking,
   getAllBookings,
   getABooking,

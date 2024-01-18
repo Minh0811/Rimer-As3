@@ -58,7 +58,7 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
     @Override
     public void onBindViewHolder(@NonNull DriversListHolder holder, int position) {
         holder.name.setText(drivers.get(position).getName());
-        holder.priceView.setText(String.valueOf(price));
+        holder.priceView.setText(String.valueOf(Math.floor(price)));
         holder.driver_id = drivers.get(position).getId();
     }
 
@@ -81,6 +81,7 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
                     Intent newIntent = new Intent(itemView.getContext(), TripWaitingConfirmationActivity.class);
                     newIntent.putExtra("driverName", name.getText());
                     newIntent.putExtra("driver_id", driver_id);
+                    newIntent.putExtra("currUserId", userId);
                     itemView.getContext().startActivity(newIntent);
                     BookingControllers bookingControllers = new BookingControllers();
                     bookingControllers.createNewBooking(userId, driver_id, status, distance, price, startPoint, endPoint);
