@@ -32,9 +32,20 @@ public class UserProfile extends AppCompatActivity {
         nameView.setText(name);
         emailView.setText(email);
 
-        Button editNameBtn = (Button) findViewById(R.id.nameEditBtn);
-        Button editEmailBtn = (Button) findViewById(R.id.emailEditBtn);
-        Button editPassBtn = (Button) findViewById(R.id.passwordEditBtn);
+        Button backButton = findViewById(R.id.backbtn);
+
+        Button editNameBtn =  findViewById(R.id.nameEditBtn);
+        Button editEmailBtn = findViewById(R.id.emailEditBtn);
+        Button editPassBtn =  findViewById(R.id.passwordEditBtn);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity
+                finish();
+            }
+        });
+
         editNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
