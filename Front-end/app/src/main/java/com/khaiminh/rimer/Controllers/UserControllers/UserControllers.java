@@ -164,6 +164,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
         map.put("userId", userId);
         map.put("newName", newName);
 
+        Log.d("UpdateUsername", "Sending request with userId: " + userId + ", newName: " + newName); // Log the data being sent
         Call<ResponseBody> call = retrofitInterface.updateUsername(map);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -172,6 +173,7 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
                     Toast.makeText(context, "Username updated successfully", Toast.LENGTH_LONG).show();
                     // Handle successful username update (e.g., update UI or local storage)
                 } else {
+                    Log.e("UpdateUsername", "Failed to update username: " + response.code() + " - " + response.message());
                     Toast.makeText(context, "Failed to update username", Toast.LENGTH_LONG).show();
                 }
             }
