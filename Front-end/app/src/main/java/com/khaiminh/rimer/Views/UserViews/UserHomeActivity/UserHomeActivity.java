@@ -2,6 +2,7 @@ package com.khaiminh.rimer.Views.UserViews.UserHomeActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -19,6 +20,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -56,6 +58,7 @@ import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Views.UserViews.BookingView.BookingActivity;
+import com.khaiminh.rimer.Views.UserViews.UserProfile.UserProfileView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,7 +78,6 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
     double latitude, longitude, end_latitude, end_longitude, distanceValue, priceValue;
     private final static int LOCATION_REQUEST_CODE = 23;
     private final int FINE_PERMISSION_CODE = 1;
-
 
     User user;
 
@@ -100,6 +102,11 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 // Handle action for item 1
             } else if (id == R.id.onGoingBooking) {
                 // Handle action for item 2
+            } else if (id == R.id.profile) {
+                // Handle action for item 3
+                Intent intent = new Intent(UserHomeActivity.this, UserProfileView.class);
+                intent.putExtra("curUser", user);
+                startActivityForResult(intent, 100);
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
@@ -334,6 +341,8 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 mMap.animateCamera(cameraUpdate);
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                 mMap.getUiSettings().setCompassEnabled(true);
+                latitude = ltlng.latitude;
+                longitude = ltlng.longitude;
             }
         });
 
@@ -359,12 +368,13 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
     @SuppressLint("DefaultLocale")
     public void getDistance(){
         float[] results = new float[10];
+//        Location.distanceBetween(10.7789, 106.6983, 10.7290, 106.6985, results);
         Location.distanceBetween(latitude, longitude, end_latitude, end_longitude, results);
         TextView distance = (TextView) findViewById(R.id.distanceValue);
         TextView price = (TextView) findViewById(R.id.priceValue);
-        distanceValue = results[0]/100000;
+        distanceValue = results[0]/1000;
         priceValue = calculatePrice(distanceValue);
-        distance.setText(String.format("%.1f", distanceValue));
-        price.setText(String.format("%.1f", calculatePrice(priceValue)));
+        distance.setText(String.format("%.2f", distanceValue));
+        price.setText(String.format("%.2f", priceValue));
     }
 }

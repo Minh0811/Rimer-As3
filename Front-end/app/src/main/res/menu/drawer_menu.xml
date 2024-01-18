@@ -5,5 +5,8 @@
     <item
         android:id="@+id/onGoingBooking"
         android:title="On going booking" />
+    <item
+        android:id="@+id/profile"
+        android:title="Profile" />
     <!-- Add more items as needed -->
 </menu>
