@@ -56,6 +56,7 @@ import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Views.UserViews.BookingView.BookingActivity;
+import com.khaiminh.rimer.Views.UserViews.UserProfile.UserProfile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -96,10 +97,15 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         // Set navigation item selection listener
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_item1) {
+            if (id == R.id.bookingHistory) {
                 // Handle action for item 1
-            } else if (id == R.id.nav_item2) {
+            } else if (id == R.id.onGoingBooking) {
                 // Handle action for item 2
+            } else if (id == R.id.profile) {
+                // Handle action for item 3
+                Intent intent = new Intent(UserHomeActivity.this, UserProfile.class);
+                intent.putExtra("curUser", user);
+                startActivityForResult(intent, 100);
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
