@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
@@ -29,6 +31,17 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
+        // Find the back button
+        Button backButton = findViewById(R.id.backbtn);
+
+        // Set click listener to finish the activity
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Finish the current activity
+                finish();
+            }
+        });
         Intent intent = getIntent();
         distance = Double.parseDouble(intent.getStringExtra("distance"));
         price = Double.parseDouble(intent.getStringExtra("price"));
