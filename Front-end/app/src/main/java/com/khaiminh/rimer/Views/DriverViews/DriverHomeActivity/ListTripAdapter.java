@@ -1,5 +1,6 @@
 package com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.khaiminh.rimer.Model.Booking;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.DriverViews.TripConfirmationActivity.TripConfirmationActivity;
 
 import java.util.List;
 
@@ -40,6 +42,15 @@ public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHo
         holder.pickuppointdetail.setText(currentBooking.getStartPoint());
         holder.destinationdetail.setText(currentBooking.getEndPoint());
         holder.statusdetail.setText(currentBooking.getStatus());
+
+        holder.viewbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), TripConfirmationActivity.class);
+                intent.putExtra("BOOKING_ID", currentBooking.getId()); // Assuming Booking has a getId() method
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
