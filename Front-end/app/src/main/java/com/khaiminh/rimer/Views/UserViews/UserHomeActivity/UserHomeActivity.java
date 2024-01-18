@@ -77,6 +77,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
     private final static int LOCATION_REQUEST_CODE = 23;
     private final int FINE_PERMISSION_CODE = 1;
 
+    private boolean isLocationSearched = false;
 
     User user;
 
@@ -156,7 +157,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
             public boolean onQueryTextSubmit(String query) {
                 String location = mapSearchView.getQuery().toString();
                 List<Address> addressList = null;
-
+                isLocationSearched = true;
                 if (location != null) {
                     Geocoder geocoder = new Geocoder(UserHomeActivity.this);
                     try {
@@ -334,14 +335,17 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
-                LatLng ltlng = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                        ltlng, 20f);
-                mMap.animateCamera(cameraUpdate);
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                mMap.getUiSettings().setCompassEnabled(true);
-                latitude = ltlng.latitude;
-                longitude = ltlng.longitude;
+
+                if (!isLocationSearched) { // Only update to current location if a search hasn't been performed
+                    LatLng ltlng = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                            ltlng, 20f);
+                    mMap.animateCamera(cameraUpdate);
+                    mMap.getUiSettings().setZoomControlsEnabled(true);
+                    mMap.getUiSettings().setCompassEnabled(true);
+                    latitude = ltlng.latitude;
+                    longitude = ltlng.longitude;
+                }
             }
         });
 
@@ -375,5 +379,11 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         priceValue = calculatePrice(distanceValue);
         distance.setText(String.format("%.2f", distanceValue));
         price.setText(String.format("%.2f", priceValue));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLocationSearched = false; // Reset the flag when the activity is resumed
+        // ...
     }
 }
