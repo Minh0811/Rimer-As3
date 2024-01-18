@@ -25,11 +25,11 @@ const bookingSchema = new mongoose.Schema({
     },
     startPoint: {
         type: String,
-        require: true,
+        // require: true,
     },
     endPoint: {
         type: String,
-        require: true,
+        // require: true,
     }
 });
 

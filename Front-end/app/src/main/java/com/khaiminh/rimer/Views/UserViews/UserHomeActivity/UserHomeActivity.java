@@ -167,6 +167,8 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
 
                     end_latitude = address.getLatitude();
                     end_longitude = address.getLongitude();
+
+                    getDistance();
                 }
 
                 return false;
@@ -190,7 +192,7 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 newIntent.putExtra("long", longitude);
                 newIntent.putExtra("endlat", end_latitude);
                 newIntent.putExtra("endlong", end_longitude);
-                newIntent.putExtra("user", user);
+                newIntent.putExtra("user_id", user.getId());
                 newIntent.putExtra("drivers", driverList);
                 startActivityForResult(newIntent, 900);
             }
@@ -360,9 +362,9 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         Location.distanceBetween(latitude, longitude, end_latitude, end_longitude, results);
         TextView distance = (TextView) findViewById(R.id.distanceValue);
         TextView price = (TextView) findViewById(R.id.priceValue);
-        distanceValue = results[0]/1000;
+        distanceValue = results[0]/100000;
         priceValue = calculatePrice(distanceValue);
-        distance.setText(String.format("%.1f", results[0]/1000));
-        price.setText(String.format("%.1f", calculatePrice(results[0]/1000)));
+        distance.setText(String.format("%.1f", distanceValue));
+        price.setText(String.format("%.1f", calculatePrice(priceValue)));
     }
 }

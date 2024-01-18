@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.khaiminh.rimer.Controllers.BookingControllers.BookingControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.User;
@@ -22,15 +24,23 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
     private Context context;
     private List<User> drivers;
     private int layout;
-//    private User curUser;
+    private String userId;
     double price;
+    double distance;
+    String status;
+    String startPoint;
+    String endPoint;
 
-    public void setData(Context context, List<User> drivers, int layout, double price) {
+    public void setData(Context context, String userId, List<User> drivers, int layout, String status, double distance, double price, String startPoint, String endPoint) {
         this.context = context;
         this.drivers = drivers;
         this.layout = layout;
-//        this.curUser = curUser;
+        this.userId = userId;
         this.price = price;
+        this.distance = distance;
+        this.status = status;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
     }
     public void retrofitHandle(){
         retrofitControllers.retrofitController();
@@ -48,7 +58,8 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
     @Override
     public void onBindViewHolder(@NonNull DriversListHolder holder, int position) {
         holder.name.setText(drivers.get(position).getName());
-        holder.price.setText(String.valueOf(price));
+        holder.priceView.setText(String.valueOf(price));
+        holder.driver_id = drivers.get(position).getId();
     }
 
     @Override
@@ -57,18 +68,22 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
     }
 
     public class DriversListHolder extends RecyclerView.ViewHolder {
-        TextView name, price;
+        TextView name, priceView;
+        String driver_id;
         public DriversListHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.drivername);
-            price = itemView.findViewById(R.id.farerideinfo);
+            priceView = itemView.findViewById(R.id.farerideinfo);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent newIntent = new Intent(itemView.getContext(), TripWaitingConfirmationActivity.class);
                     newIntent.putExtra("driverName", name.getText());
+                    newIntent.putExtra("driver_id", driver_id);
                     itemView.getContext().startActivity(newIntent);
+                    BookingControllers bookingControllers = new BookingControllers();
+                    bookingControllers.createNewBooking(userId, driver_id, status, distance, price, startPoint, endPoint);
                 }
             });
         }
