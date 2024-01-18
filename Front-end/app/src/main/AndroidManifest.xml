@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Views.DriverViews.DriverProfile.DriverProfile"
+            android:exported="false" />
+        <activity
             android:name=".Views.UserViews.UserProfile.UserProfile"
             android:exported="false" />
         <activity

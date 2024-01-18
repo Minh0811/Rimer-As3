@@ -7,12 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.Booking;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.DriverViews.DriverProfile.DriverProfile;
+import com.khaiminh.rimer.Views.UserViews.UserHomeActivity.UserHomeActivity;
+import com.khaiminh.rimer.Views.UserViews.UserProfile.UserProfile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,11 +31,20 @@ public class ListTripActivity extends AppCompatActivity {
     ListTripAdapter listTripAdapter;
     RetrofitInterface retrofitInterface;
 
+    User currUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_trip);
+
+        Intent intent = getIntent();
+        String userId = null;
+        if (intent.getExtras() != null) {
+            userId = intent.getStringExtra("userId");
+            currUser = (User) intent.getSerializableExtra("currUser");
+            Log.d("ListTripActivity", "User ID: " + userId);
+        }
 
         recyclerView = findViewById(R.id.listAvailableDrivers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -40,12 +54,16 @@ public class ListTripActivity extends AppCompatActivity {
 //        listTripAdapter = new ListTripAdapter(tripList);
 //        recyclerView.setAdapter(listTripAdapter);
 
-        Intent intent = getIntent();
-        String userId = null;
-        if (intent.getExtras() != null) {
-            userId = intent.getStringExtra("userId");
-            Log.d("ListTripActivity", "User ID: " + userId);
-        }
+        ImageButton profileButton = (ImageButton) findViewById(R.id.driverBtn);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListTripActivity.this, DriverProfile.class);
+                intent.putExtra("curUser", currUser);
+                startActivityForResult(intent, 100);
+            }
+        });
+
         // Initialize Retrofit
         RetrofitControllers retrofitControllers = new RetrofitControllers();
         retrofitControllers.retrofitController();
