@@ -20,9 +20,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BookingActivity extends AppCompatActivity {
-    User user;
     ArrayList<User> drivers = new ArrayList<>();
     double distance, price;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +30,17 @@ public class BookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_booking);
 
         Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
         distance = Double.parseDouble(intent.getStringExtra("distance"));
         price = Double.parseDouble(intent.getStringExtra("price"));
         drivers = (ArrayList<User>) intent.getSerializableExtra("drivers");
+        userId = (String) intent.getStringExtra("user_id");
 
         RecyclerView recyclerView = findViewById(R.id.listAvailableDrivers);
         ListDriverAdapter driverAdapter = new ListDriverAdapter();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(BookingActivity.this, RecyclerView.VERTICAL, false));
 
-        driverAdapter.setData(BookingActivity.this, drivers, R.layout.driver_available, price);
+        driverAdapter.setData(BookingActivity.this, userId, drivers, R.layout.driver_available, "Appending...", distance, price, "startPoint", "endPoint");
         recyclerView.setAdapter(driverAdapter);
     }
 }
