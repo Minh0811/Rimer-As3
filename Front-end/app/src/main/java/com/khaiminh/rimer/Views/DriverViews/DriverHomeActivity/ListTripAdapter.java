@@ -1,12 +1,14 @@
 package com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,9 +48,19 @@ public class ListTripAdapter extends RecyclerView.Adapter<ListTripAdapter.ViewHo
         holder.viewbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), TripConfirmationActivity.class);
-                intent.putExtra("BOOKING_ID", currentBooking.getId()); // Assuming Booking has a getId() method
-                v.getContext().startActivity(intent);
+                // Log the current booking ID
+                Log.d("ListTripAdapter", "Current Booking ID: " + currentBooking.getId());
+
+                // Ensure that currentBooking.getId() is not null
+                if (currentBooking.getId() != null) {
+                    Intent intent = new Intent(v.getContext(), TripConfirmationActivity.class);
+                    intent.putExtra("BOOKING_ID", currentBooking.getId());
+                    v.getContext().startActivity(intent);
+                } else {
+                    // Handle the case where booking ID is null
+                    Log.e("ListTripAdapter", "Booking ID is null, cannot start TripConfirmationActivity");
+                    Toast.makeText(v.getContext(), "Error: Booking ID is null.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

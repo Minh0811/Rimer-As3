@@ -3,7 +3,7 @@ package com.khaiminh.rimer.Model;
 import java.io.Serializable;
 
 public class Booking implements Serializable {
-    private String id;
+    private String _id;
     private String userId;
     private String driverId;
     private String status;
@@ -12,8 +12,8 @@ public class Booking implements Serializable {
     private String startPoint;
     private String endPoint;
 
-    public Booking(String id,String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint) {
-        this.id = id;
+    public Booking(String _id,String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint) {
+        this._id = _id;
         this.userId = userId;
         this.driverId = driverId;
         this.status = status;
@@ -23,11 +23,11 @@ public class Booking implements Serializable {
         this.endPoint = endPoint;
     }
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String _id) {
+        this._id = _id;
     }
     public String getUserId() {
         return userId;
@@ -83,5 +83,20 @@ public class Booking implements Serializable {
 
     public void setEndPoint(String endPoint) {
         this.endPoint = endPoint;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id='" + _id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", driverId='" + driverId + '\'' +
+                ", status='" + status + '\'' +
+                ", distance=" + distance +
+                ", price=" + price +
+                ", startPoint='" + startPoint + '\'' +
+                ", endPoint='" + endPoint + '\'' +
+                // ... include other fields if you want
+                '}';
     }
 }

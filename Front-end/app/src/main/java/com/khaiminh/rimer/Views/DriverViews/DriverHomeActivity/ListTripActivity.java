@@ -63,6 +63,9 @@ public class ListTripActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Booking> bookingList = response.body();
                     Log.d("ListTripActivity", "Number of bookings fetched: " + bookingList.size());
+                    for (Booking booking : bookingList) {
+                        Log.d("ListTripActivity", "Booking: " + booking.toString());
+                    }
 
                     listTripAdapter = new ListTripAdapter(bookingList);
                     recyclerView.setAdapter(listTripAdapter);
@@ -82,5 +85,16 @@ public class ListTripActivity extends AppCompatActivity {
                 Log.e("ListTripActivity", "Error fetching bookings: " + t.getMessage());
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Fetch bookings for the driver again to refresh the list
+        Intent intent = getIntent();
+        String userId = null;
+        if (intent.getExtras() != null) {
+            userId = intent.getStringExtra("userId");
+        }
+        fetchBookingsForDriver(userId);
     }
 }

@@ -3,14 +3,22 @@ package com.khaiminh.rimer.Views.DriverViews.TripConfirmationActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.R;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TripConfirmationActivity extends AppCompatActivity {
 
@@ -33,6 +41,12 @@ public class TripConfirmationActivity extends AppCompatActivity {
 
         // Set up the Accept Ride button click listener
         bookingId = getIntent().getStringExtra("BOOKING_ID");
+        Log.d("TripConfirmationActivity", "BOOKING ID: " + bookingId);
+        if (bookingId == null) {
+            Log.e("TripConfirmationActivity", "Booking ID is null");
+
+            // Handle the null case appropriately
+        }
 
         // Initialize Retrofit
         RetrofitControllers retrofitControllers = new RetrofitControllers();
@@ -58,12 +72,48 @@ public class TripConfirmationActivity extends AppCompatActivity {
     }
 
     private void updateBookingStatus(String bookingId, String newStatus) {
-        // Implement the logic to update the booking status
-        // Make a network request to your backend to update the status of the booking
+        HashMap<String, String> map = new HashMap<>();
+        map.put("status", newStatus);
+
+        Call<Void> call = retrofitInterface.updateBookingStatus(bookingId, map);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(TripConfirmationActivity.this, "Booking updated successfully", Toast.LENGTH_SHORT).show();
+                    // Optionally, close the activity or navigate the user away
+                } else {
+                    Toast.makeText(TripConfirmationActivity.this, "Failed to update booking", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(TripConfirmationActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void deleteBooking(String bookingId) {
-        // Implement the logic to delete the booking
-        // Make a network request to your backend to delete the booking
+        Call<Void> call = retrofitInterface.deleteBooking(bookingId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(TripConfirmationActivity.this, "Booking deleted successfully", Toast.LENGTH_SHORT).show();
+                    // Close the activity and return to the previous one
+                    finish();
+                } else {
+                    Toast.makeText(TripConfirmationActivity.this, "Failed to delete booking", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(TripConfirmationActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+
 }
