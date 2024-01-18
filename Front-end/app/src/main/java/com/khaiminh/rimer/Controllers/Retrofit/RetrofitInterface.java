@@ -50,4 +50,7 @@ public interface RetrofitInterface {
 
     @POST("/updatePassword")
     Call<ResponseBody> updatePassword(@Body RequestBody body);
+
+    @POST("/user/update-username") // Ensure this matches the endpoint defined in your Node.js server
+    Call<ResponseBody> updateUsername(@Body HashMap<String, String> map);
 }

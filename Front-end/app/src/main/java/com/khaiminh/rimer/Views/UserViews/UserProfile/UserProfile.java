@@ -3,15 +3,25 @@ package com.khaiminh.rimer.Views.UserViews.UserProfile;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
+
+import java.util.HashMap;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UserProfile extends AppCompatActivity {
 
@@ -60,14 +70,18 @@ public class UserProfile extends AppCompatActivity {
                 oldName.setText(name);
 
                 EditText newNameValue = view.findViewById(R.id.editNameValue);
-                String newName = newNameValue.getText().toString();
 
                 Button submitBtn = view.findViewById(R.id.submitEditBtn);
 
                 submitBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // handle submit edit name
+                        String newName = newNameValue.getText().toString();
+                        String userId = user.getId(); // Make sure you have the user's ID
+
+                        // Create an instance of UserControllers and call updateUsername
+                        UserControllers userControllers = new UserControllers();
+                        userControllers.updateUsername(userId, newName, UserProfile.this);
                     }
                 });
             }
@@ -140,6 +154,5 @@ public class UserProfile extends AppCompatActivity {
             }
         });
     }
-
 
 }

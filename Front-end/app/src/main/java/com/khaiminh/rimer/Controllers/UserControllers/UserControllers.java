@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -152,6 +153,32 @@ public class UserControllers extends AppCompatActivity implements IUserControlle
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(context.getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    public void updateUsername(String userId, String newName, Context context) {
+        // Make sure retrofitHandle and retrofitInterface are accessible here
+        retrofitHandle();
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("newName", newName);
+
+        Call<ResponseBody> call = retrofitInterface.updateUsername(map);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.code() == 200) {
+                    Toast.makeText(context, "Username updated successfully", Toast.LENGTH_LONG).show();
+                    // Handle successful username update (e.g., update UI or local storage)
+                } else {
+                    Toast.makeText(context, "Failed to update username", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
