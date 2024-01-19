@@ -9,6 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -76,10 +79,9 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
     double latitude, longitude, end_latitude, end_longitude, distanceValue, priceValue;
     private final static int LOCATION_REQUEST_CODE = 23;
     private final int FINE_PERMISSION_CODE = 1;
-
     private boolean isLocationSearched = false;
-
     User user;
+    String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +203,8 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
                 newIntent.putExtra("endlong", end_longitude);
                 newIntent.putExtra("user_id", user.getId());
                 newIntent.putExtra("drivers", driverList);
+                newIntent.putExtra("startPoint", getAddress(new LatLng(latitude, longitude) ));
+                newIntent.putExtra("endPoint", getAddress(new LatLng(end_latitude, end_longitude) ));
                 startActivityForResult(newIntent, 900);
             }
         });
@@ -380,6 +384,34 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         distance.setText(String.format("%.2f", distanceValue));
         price.setText(String.format("%.2f", priceValue));
     }
+
+    private String getAddress(LatLng latLng){
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            String city = addresses.get(0).getLocality();
+            String state = addresses.get(0).getAdminArea();
+            String country = addresses.get(0).getCountryName();
+            String postalCode = addresses.get(0).getPostalCode();
+            String knownName = addresses.get(0).getFeatureName();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+            if (prev != null) {
+
+                ft.remove(prev);
+            }
+            return address;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "No Address Found";
+
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
