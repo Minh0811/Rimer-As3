@@ -15,6 +15,7 @@ import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.Booking;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.AuthenticationViews.LoginView.LoginActivity;
 import com.khaiminh.rimer.Views.DriverViews.DriverProfile.DriverProfile;
 import com.khaiminh.rimer.Views.UserViews.UserHomeActivity.UserHomeActivity;
 import com.khaiminh.rimer.Views.UserViews.UserProfile.UserProfile;
@@ -55,6 +56,16 @@ public class ListTripActivity extends AppCompatActivity {
 //        recyclerView.setAdapter(listTripAdapter);
 
         ImageButton profileButton = (ImageButton) findViewById(R.id.driverBtn);
+
+        ImageButton logout = (ImageButton) findViewById(R.id.logoutBtn);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListTripActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
