@@ -41,7 +41,7 @@ public class UserProfile extends AppCompatActivity {
 
         nameView.setText(name);
         emailView.setText(email);
-        
+
         Button backButton = findViewById(R.id.backbtn);
 
         Button editNameBtn =  findViewById(R.id.nameEditBtn);
