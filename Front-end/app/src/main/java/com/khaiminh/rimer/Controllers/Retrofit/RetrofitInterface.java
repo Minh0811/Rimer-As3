@@ -1,5 +1,6 @@
 package com.khaiminh.rimer.Controllers.Retrofit;
 
+import com.khaiminh.rimer.Model.DriverResponse;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.Model.Booking;
 
@@ -53,4 +54,7 @@ public interface RetrofitInterface {
 
     @POST("/user/update-username") // Ensure this matches the endpoint defined in your Node.js server
     Call<ResponseBody> updateUsername(@Body HashMap<String, String> map);
+
+    @GET("api/booking/check-response/{bookingId}")
+    Call<DriverResponse> checkDriverResponse(@Path("bookingId") String bookingId);
 }

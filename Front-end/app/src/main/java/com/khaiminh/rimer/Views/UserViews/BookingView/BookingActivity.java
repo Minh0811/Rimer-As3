@@ -11,12 +11,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.khaiminh.rimer.Controllers.BookingControllers.BookingControllers;
 import com.khaiminh.rimer.Controllers.UserControllers.UserControllers;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.UserViews.TripWaitingConfirmationActivity.TripWaitingConfirmationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +42,19 @@ public class BookingActivity extends AppCompatActivity {
         // Find the back button
         Button backButton = findViewById(R.id.backbtn);
 
+        Button findDriverButton = findViewById(R.id.button_under_map);
+        findDriverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!drivers.isEmpty()) {
+                    User randomDriver = drivers.get(new Random().nextInt(drivers.size()));
+                    createBookingWithRandomDriver(randomDriver);
+                } else {
+                    Toast.makeText(BookingActivity.this, "No drivers available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         // Set click listener to finish the activity
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +74,18 @@ public class BookingActivity extends AppCompatActivity {
         startPointField.setText(startPoint);
         endPointField.setText(endPoint);
 
-        RecyclerView recyclerView = findViewById(R.id.listAvailableDrivers);
         ListDriverAdapter driverAdapter = new ListDriverAdapter();
+    }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(BookingActivity.this, RecyclerView.VERTICAL, false));
-
-        driverAdapter.setData(BookingActivity.this, userId, drivers, R.layout.driver_available, "Appending...", distance, price, startPoint, endPoint);
-        recyclerView.setAdapter(driverAdapter);
+    private void createBookingWithRandomDriver(User driver) {
+        BookingControllers bookingControllers = new BookingControllers();
+        // Assuming 'userId', 'startPoint', 'endPoint', 'distance', and 'price' are already defined
+        bookingControllers.createNewBooking(userId, driver.getId(), "Pending", distance, price, startPoint, endPoint);
+        Toast.makeText(this, "Booking created with driver: " + driver.getName(), Toast.LENGTH_SHORT).show();
+        // Navigate to TripWaitingConfirmationActivity
+        Intent intent = new Intent(BookingActivity.this, TripWaitingConfirmationActivity.class);
+        intent.putExtra("driverId", driver.getId()); // Pass the driver ID to the next activity
+        // Add any other booking details you need to pass to the next activity
+        startActivity(intent);
     }
 }

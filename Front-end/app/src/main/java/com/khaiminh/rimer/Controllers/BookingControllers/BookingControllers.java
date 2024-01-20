@@ -27,7 +27,7 @@ public class BookingControllers implements IBookingControllers{
         HashMap<String, Object> map = new HashMap<>();
         map.put("user", userId);
         map.put("driver", driverId);
-        map.put("status", "Appending...");
+        map.put("status", "pending");
         map.put("distance", distance);
         map.put("price", price);
         map.put("startPoint", startPoint);

@@ -76,6 +76,28 @@ const getDriverBookings = async (req, res) => {
   }
 };
 
+const checkDriverResponse = async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const booking = await Booking.findById(bookingId);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    // Send the booking status
+    res
+      .status(200)
+      .json({
+        accepted: booking.status === "accepted",
+        status: booking.status,
+      });
+  } catch (error) {
+    console.error("Error checking booking status:", error);
+    handleServerError(res, error);
+  }
+};
+
 export {
   getDriverBookings,
   createBooking,
@@ -83,4 +105,5 @@ export {
   getABooking,
   updateBooking,
   deleteBooking,
+  checkDriverResponse,
 };
