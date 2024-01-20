@@ -34,11 +34,11 @@
         android:id="@+id/btnCancelRide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel Ride"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvWaitingForConfirmation"
+        android:text="Back home"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWaitingForConfirmation" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
