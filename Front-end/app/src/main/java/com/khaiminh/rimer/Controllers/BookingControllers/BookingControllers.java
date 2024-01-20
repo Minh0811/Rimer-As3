@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
+import com.khaiminh.rimer.Controllers.BookingControllers.BookingIdCallback;
+import com.khaiminh.rimer.Model.Booking;
 
 import java.util.HashMap;
 
@@ -21,7 +23,7 @@ public class BookingControllers implements IBookingControllers{
     }
 
     @Override
-    public void createNewBooking(String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint) {
+    public void createNewBooking(String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint, BookingIdCallback bookingIdCallback) {
         retrofitHandle();
 
         HashMap<String, Object> map = new HashMap<>();
@@ -33,21 +35,24 @@ public class BookingControllers implements IBookingControllers{
         map.put("startPoint", startPoint);
         map.put("endPoint", endPoint);
 
-        Call<Void> call = retrofitInterface.createNewBooking(map);
-        call.enqueue(new Callback<Void>() {
+        Call<Booking> call = retrofitInterface.createNewBooking(map);
+        call.enqueue(new Callback<Booking>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Log.d("Create booking", "Create successfully.");
+            public void onResponse(Call<Booking> call, Response<Booking> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Booking booking = response.body();
+                    String bookingId = booking.getId(); // Extract the booking ID
+                    bookingIdCallback.onResponse(bookingId); // Pass the booking ID to the callback
                 } else {
                     Log.e("Create booking", "Failed to create. Response code: " + response.code());
+                    bookingIdCallback.onFailure(new Throwable("Failed to create booking. Response code: " + response.code()));
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                // Handle network failure or other errors
+            public void onFailure(Call<Booking> call, Throwable t) {
                 Log.e("Create booking", "Error create booking: " + t.getMessage());
+                bookingIdCallback.onFailure(t);
             }
         });
     }

@@ -2,6 +2,7 @@ package com.khaiminh.rimer.Views.UserViews.BookingView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.khaiminh.rimer.Controllers.BookingControllers.BookingControllers;
+import com.khaiminh.rimer.Controllers.BookingControllers.BookingIdCallback;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.User;
@@ -62,11 +64,6 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
         holder.driver_id = drivers.get(position).getId();
     }
 
-    @Override
-    public int getItemCount() {
-        return drivers.size();
-    }
-
     public class DriversListHolder extends RecyclerView.ViewHolder {
         TextView name, priceView;
         String driver_id;
@@ -78,15 +75,32 @@ public class ListDriverAdapter extends RecyclerView.Adapter<ListDriverAdapter.Dr
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent newIntent = new Intent(itemView.getContext(), TripWaitingConfirmationActivity.class);
-                    newIntent.putExtra("driverName", name.getText());
-                    newIntent.putExtra("driver_id", driver_id);
-                    itemView.getContext().startActivity(newIntent);
                     BookingControllers bookingControllers = new BookingControllers();
-                    bookingControllers.createNewBooking(userId, driver_id, status, distance, price, startPoint, endPoint);
+                    bookingControllers.createNewBooking(userId, driver_id, status, distance, price, startPoint, endPoint, new BookingIdCallback() {
+                        @Override
+                        public void onResponse(String bookingId) {
+                            // Handle successful booking creation
+                            Intent newIntent = new Intent(itemView.getContext(), TripWaitingConfirmationActivity.class);
+                            newIntent.putExtra("driverName", name.getText());
+                            newIntent.putExtra("driver_id", driver_id);
+                            newIntent.putExtra("bookingId", bookingId); // Pass the booking ID to the next activity
+                            itemView.getContext().startActivity(newIntent);
+                        }
+
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            // Handle failure to create booking
+                            Log.e("Create booking", "Error create booking: " + throwable.getMessage());
+                        }
+                    });
                 }
             });
         }
     }
+    @Override
+    public int getItemCount() {
+        return drivers.size();
+    }
+
 }
 

@@ -11,7 +11,7 @@ const bookingSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["pending", "accepted", "declined", "completed"], // Add more statuses as needed
+    enum: ["pending", "accepted", "declined", "completed"],
     default: "pending",
   },
   distance: {
