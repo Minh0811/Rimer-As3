@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.khaiminh.rimer.Controllers.BookingControllers.BookingControllers;
+import com.khaiminh.rimer.Controllers.BookingControllers.UpdateBookingStatusCallback;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.DriverResponse;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.DriverViews.TripConfirmationActivity.TripConfirmationActivity;
 import com.khaiminh.rimer.Views.UserViews.TripDetailActivity.TripDetailActivity;
 
 import retrofit2.Call;
@@ -42,6 +45,8 @@ public class TripWaitingConfirmationActivity extends AppCompatActivity {
         tvWaitingForConfirmation = findViewById(R.id.tvWaitingForConfirmation);
         btnCancelRide = findViewById(R.id.btnCancelRide);
 
+        // Get the booking ID from the intent
+        bookingId = getIntent().getStringExtra("bookingId");
         // Get the driver ID from the intent
         String driverId = getIntent().getStringExtra("driverId");
 
@@ -52,11 +57,9 @@ public class TripWaitingConfirmationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Handle the cancel ride action
-                cancelRide();
+                cancelRide(bookingId);
             }
         });
-        // Get the booking ID from the intent
-        bookingId = getIntent().getStringExtra("bookingId");
 
         // Start the polling
         handler.postDelayed(new Runnable() {
@@ -70,11 +73,21 @@ public class TripWaitingConfirmationActivity extends AppCompatActivity {
         }, delay);
     }
 
-    private void cancelRide() {
-        // TODO: Implement what happens when the ride is cancelled
-        // For example, notify the backend server, show a message to the user, etc.
+    private void cancelRide(String bookingId) {
+        BookingControllers bookingControllers = new BookingControllers();
+        bookingControllers.updateBookingStatus(bookingId, "declined", new UpdateBookingStatusCallback(){
+            @Override
+            public void onSuccess() {
+                Toast.makeText(TripWaitingConfirmationActivity.this, "Ride declined successfully", Toast.LENGTH_SHORT).show();
+                // Handle successful booking status update (e.g., navigate to another activity)
+            }
 
-        // Optionally, close the activity
+            @Override
+            public void onFailure(String errorMessage) {
+                Toast.makeText(TripWaitingConfirmationActivity.this, "Failed to declined ride: " + errorMessage, Toast.LENGTH_SHORT).show();
+                // Handle failure to update booking status
+            }
+        });
         finish();
     }
     private void checkDriverResponse(String bookingId) {

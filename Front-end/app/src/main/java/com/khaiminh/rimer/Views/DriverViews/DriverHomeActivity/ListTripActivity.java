@@ -79,13 +79,23 @@ public class ListTripActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Booking>> call, Response<List<Booking>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Booking> bookingList = response.body();
-                    Log.d("ListTripActivity", "Number of bookings fetched: " + bookingList.size());
-                    for (Booking booking : bookingList) {
+                    List<Booking> allBookings = response.body();
+                    List<Booking> pendingBookings = new ArrayList<>();
+
+                    // Filter bookings with "pending" status
+                    for (Booking booking : allBookings) {
+                        if ("pending".equalsIgnoreCase(booking.getStatus())) {
+                            pendingBookings.add(booking);
+                        }
+                    }
+
+                    Log.d("ListTripActivity", "Number of pending bookings fetched: " + pendingBookings.size());
+                    for (Booking booking : pendingBookings) {
                         Log.d("ListTripActivity", "Booking: " + booking.toString());
                     }
 
-                    listTripAdapter = new ListTripAdapter(bookingList);
+                    // Use the filtered list for the adapter
+                    listTripAdapter = new ListTripAdapter(pendingBookings);
                     recyclerView.setAdapter(listTripAdapter);
                 } else {
                     Log.d("ListTripActivity", "Response not successful or empty body! Response code: " + response.code());
@@ -104,6 +114,7 @@ public class ListTripActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();

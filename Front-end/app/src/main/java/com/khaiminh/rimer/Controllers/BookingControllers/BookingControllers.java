@@ -56,4 +56,55 @@ public class BookingControllers implements IBookingControllers{
             }
         });
     }
+
+    public void updateBookingStatus(String bookingId, String newStatus, UpdateBookingStatusCallback callback) {
+        retrofitHandle();
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("status", newStatus);
+
+        Call<Void> call = retrofitInterface.updateBookingStatus(bookingId, map);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Update booking status", "Booking status updated successfully.");
+                    callback.onSuccess();
+                } else {
+                    Log.e("Update booking status", "Failed to update booking. Response code: " + response.code());
+                    callback.onFailure("Failed to update booking. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("Update booking status", "Error updating booking status: " + t.getMessage());
+                callback.onFailure("Error updating booking status: " + t.getMessage());
+            }
+        });
+    }
+
+    public void deleteBooking(String bookingId, DeleteBookingCallback callback) {
+        retrofitHandle();
+
+        Call<Void> call = retrofitInterface.deleteBooking(bookingId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Delete booking", "Booking deleted successfully.");
+                    callback.onSuccess();
+                } else {
+                    Log.e("Delete booking", "Failed to delete booking. Response code: " + response.code());
+                    callback.onFailure("Failed to delete booking. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("Delete booking", "Error deleting booking: " + t.getMessage());
+                callback.onFailure("Error deleting booking: " + t.getMessage());
+            }
+        });
+    }
 }
