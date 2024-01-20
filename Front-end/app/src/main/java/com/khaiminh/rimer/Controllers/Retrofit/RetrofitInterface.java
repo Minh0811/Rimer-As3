@@ -27,7 +27,7 @@ public interface RetrofitInterface {
     @POST("api/reviews/create-review")
     Call<Void> submitReview(@Body HashMap<String, Object> reviewDetails);
     @POST("api/booking/create")
-    Call<Void> createNewBooking(@Body HashMap<String, Object> map);
+    Call<Booking> createNewBooking(@Body HashMap<String, Object> map);
     @GET("api/auth/getDrivers")
     Call<List<User>> executeListDrivers();
 
