@@ -14,7 +14,7 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
     android:layout_height="0dp"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toTopOf="@+id/detailsLayout"
-    app:layout_constraintVertical_weight="2" />
+    app:layout_constraintVertical_weight="1" />
 
 <!-- Layout for Taxi Driver and Trip Details -->
 <LinearLayout
@@ -44,8 +44,8 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <!-- Driver's Name -->
@@ -53,8 +53,8 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
             android:id="@+id/driverName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Driver's Name"
             android:layout_marginBottom="8dp"
+            android:text="Driver's Name"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <!-- Trip's Destination -->
@@ -62,15 +62,16 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
             android:id="@+id/tripPickupPoint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pick_up_from"
             android:layout_marginBottom="8dp"
+            android:text="@string/pick_up_from"
             android:textAppearance="?attr/textAppearanceListItem" />
+
         <TextView
             android:id="@+id/tripDestination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Destination"
             android:layout_marginBottom="8dp"
+            android:text="Destination"
             android:textAppearance="?attr/textAppearanceListItem" />
 
 
@@ -79,8 +80,8 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
             android:id="@+id/customerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/customer_name"
             android:layout_marginBottom="8dp"
+            android:text="@string/customer_name"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <!-- Bike's Description -->
@@ -90,7 +91,6 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
             android:layout_height="wrap_content"
             android:text="Price"
             android:textAppearance="?attr/textAppearanceListItem" />
-
     </LinearLayout>
 
 </LinearLayout>

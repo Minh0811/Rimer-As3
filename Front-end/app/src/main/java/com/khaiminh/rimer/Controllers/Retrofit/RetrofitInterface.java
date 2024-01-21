@@ -30,11 +30,12 @@ public interface RetrofitInterface {
     Call<Booking> createNewBooking(@Body HashMap<String, Object> map);
     @GET("api/auth/getDrivers")
     Call<List<User>> executeListDrivers();
-
+    @GET("api/users/details/{userId}")
+    Call<User> getUserDetails(@Path("userId") String userId);
     // Method to fetch bookings for a specific driver
     @GET("api/booking/driver/{driverId}")
     Call<List<Booking>> getDriverBookings(@Path("driverId") String driverId);
-    @GET("api/bookings/{bookingId}")
+    @GET("api/booking/{bookingId}")
     Call<Booking> getBookingDetails(@Path("bookingId") String bookingId);
 
     // Method to update booking status

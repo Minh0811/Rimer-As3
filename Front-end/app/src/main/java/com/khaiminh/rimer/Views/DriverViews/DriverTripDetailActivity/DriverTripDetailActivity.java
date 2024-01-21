@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.Booking;
+import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 
 import retrofit2.Call;
@@ -40,7 +41,8 @@ public class DriverTripDetailActivity extends AppCompatActivity {
         price = findViewById(R.id.price);
 
         // Retrieve the booking ID from the intent
-        bookingId = getIntent().getStringExtra("BOOKING_ID");
+        bookingId = getIntent().getStringExtra("bookingId");
+        Log.e("DriverTripDetailActivity", "Booking ID: " + bookingId);
         if (bookingId == null) {
             Log.e("DriverTripDetailActivity", "Booking ID is null");
             // Handle the null case appropriately
@@ -65,13 +67,31 @@ public class DriverTripDetailActivity extends AppCompatActivity {
                     Booking booking = response.body();
                     Log.d("DriverTripDetailActivity", "Booking details fetched successfully.");
 
-                    // Update UI with booking details
-                    // Note: Adjust these lines according to your actual data model and UI design
-                    driverName.setText(booking.getDriverId()); // Assuming you want to display the driver ID
-                    tripPickupPoint.setText(booking.getStartPoint()); // Display the trip pickup point
-                    tripDestination.setText(booking.getEndPoint()); // Display the trip destination
-                    customerName.setText(booking.getUserId()); // Assuming you want to display the user/customer ID
-                    price.setText(String.format("$%.2f", booking.getPrice())); // Display the price
+                    // Log and check driverId and userId
+                    String driverId = booking.getDriverId();
+                    String userId = booking.getUserId();
+                    Log.d("DriverTripDetailActivity", "Driver ID: " + driverId + ", User ID: " + userId);
+
+                    // Fetch and display driver's name if driverId is not null
+                    if (driverId != null) {
+                        fetchUserName(driverId, driverName);
+                    } else {
+                        Log.e("DriverTripDetailActivity", "Driver ID is null");
+                        driverName.setText("Driver name not available");
+                    }
+
+                    // Fetch and display customer's name if userId is not null
+                    if (userId != null) {
+                        fetchUserName(userId, customerName);
+                    } else {
+                        Log.e("DriverTripDetailActivity", "User ID is null");
+                        customerName.setText("Customer name not available");
+                    }
+
+                    // Update UI with other booking details
+                    tripPickupPoint.setText(booking.getStartPoint());
+                    tripDestination.setText(booking.getEndPoint());
+                    price.setText(String.format("$%.2f", booking.getPrice()));
                 } else {
                     Log.e("DriverTripDetailActivity", "Failed to fetch booking details. Response code: " + response.code());
                 }
@@ -83,4 +103,26 @@ public class DriverTripDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void fetchUserName(String userId, TextView textViewToUpdate) {
+        Call<User> call = retrofitInterface.getUserDetails(userId);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User user = response.body();
+                    Log.d("DriverTripDetailActivity", "User details fetched successfully.");
+                    textViewToUpdate.setText(user.getName()); // Assuming 'getName()' method exists in your User model
+                } else {
+                    Log.e("DriverTripDetailActivity", "Failed to fetch user details. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("DriverTripDetailActivity", "Error fetching user details: " + t.getMessage());
+            }
+        });
+    }
+
 }
