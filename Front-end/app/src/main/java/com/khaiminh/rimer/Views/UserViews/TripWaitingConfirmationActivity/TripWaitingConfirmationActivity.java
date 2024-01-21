@@ -110,6 +110,11 @@ public class TripWaitingConfirmationActivity extends AppCompatActivity {
 
                             // Stop the handler from making further requests
                             handler.removeCallbacksAndMessages(null);
+
+                            // Finish TripWaitingConfirmationActivity
+                            finish();
+
+
                         }
                     } else {
                         // Handle the scenario where the response is not successful
