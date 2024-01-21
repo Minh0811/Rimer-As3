@@ -4,11 +4,11 @@ public class BookingStatus {
     private boolean completed;
     private String message; // Optional, for additional message from the backend
 
-    public boolean isAccepted() {
+    public boolean isCompleted() {
         return completed;
     }
 
-    public void setAccepted(boolean completed) {
+    public void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
