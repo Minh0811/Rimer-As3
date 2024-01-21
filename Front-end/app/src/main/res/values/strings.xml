@@ -26,5 +26,7 @@
     <string name="waiting_for_driver_s_confirmation">Waiting for Driver\'s Confirmation...</string>
     <string name="cancel_ride">Cancel Ride</string>
     <string name="you_have_a_new_request">You have a new request!!</string>
-    <string name="accept_ride">Accept ride</string>>
+    <string name="accept_ride">Accept ride</string>
+    <string name="pick_up_from">Pick up from</string>
+    <string name="customer_name">Customer Name</string>>
 </resources>

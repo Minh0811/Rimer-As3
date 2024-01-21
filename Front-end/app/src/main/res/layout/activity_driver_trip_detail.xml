@@ -59,6 +59,13 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
 
         <!-- Trip's Destination -->
         <TextView
+            android:id="@+id/tripPickupPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_up_from"
+            android:layout_marginBottom="8dp"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
             android:id="@+id/tripDestination"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,22 +73,24 @@ tools:context=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActiv
             android:layout_marginBottom="8dp"
             android:textAppearance="?attr/textAppearanceListItem" />
 
+
         <!-- License Plate Number -->
         <TextView
-            android:id="@+id/licensePlateNumber"
+            android:id="@+id/customerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="License Plate"
+            android:text="@string/customer_name"
             android:layout_marginBottom="8dp"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <!-- Bike's Description -->
         <TextView
-            android:id="@+id/bikeDescription"
+            android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bike Description"
+            android:text="Price"
             android:textAppearance="?attr/textAppearanceListItem" />
+
     </LinearLayout>
 
 </LinearLayout>

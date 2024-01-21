@@ -34,6 +34,8 @@ public interface RetrofitInterface {
     // Method to fetch bookings for a specific driver
     @GET("api/booking/driver/{driverId}")
     Call<List<Booking>> getDriverBookings(@Path("driverId") String driverId);
+    @GET("api/bookings/{bookingId}")
+    Call<Booking> getBookingDetails(@Path("bookingId") String bookingId);
 
     // Method to update booking status
     @PUT("api/booking/{bookingId}")

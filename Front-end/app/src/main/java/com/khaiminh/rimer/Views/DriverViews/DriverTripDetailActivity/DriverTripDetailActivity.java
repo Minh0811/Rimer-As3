@@ -1,7 +1,6 @@
 package com.khaiminh.rimer.Views.DriverViews.DriverTripDetailActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +20,10 @@ public class DriverTripDetailActivity extends AppCompatActivity {
     private String bookingId;
     private ImageView driverPicture;
     private TextView driverName;
+    private TextView tripPickupPoint;
     private TextView tripDestination;
-    private TextView licensePlateNumber;
-    private TextView bikeDescription;
+    private TextView customerName;
+    private TextView price;
     private RetrofitInterface retrofitInterface;
 
     @Override
@@ -34,16 +34,17 @@ public class DriverTripDetailActivity extends AppCompatActivity {
         // Initialize views
         driverPicture = findViewById(R.id.driverPicture);
         driverName = findViewById(R.id.driverName);
+        tripPickupPoint = findViewById(R.id.tripPickupPoint);
         tripDestination = findViewById(R.id.tripDestination);
-        licensePlateNumber = findViewById(R.id.licensePlateNumber);
-        bikeDescription = findViewById(R.id.bikeDescription);
+        customerName = findViewById(R.id.customerName);
+        price = findViewById(R.id.price);
 
-        // Set up the Accept Ride button click listener
+        // Retrieve the booking ID from the intent
         bookingId = getIntent().getStringExtra("BOOKING_ID");
-        Log.d("DriverTripDetailActivity", "BOOKING ID: " + bookingId);
         if (bookingId == null) {
             Log.e("DriverTripDetailActivity", "Booking ID is null");
             // Handle the null case appropriately
+            return;
         }
 
         // Initialize Retrofit
@@ -52,7 +53,34 @@ public class DriverTripDetailActivity extends AppCompatActivity {
         retrofitInterface = retrofitControllers.getRetrofitInterface();
 
         // Fetch booking details
-
+        fetchBookingDetails(bookingId);
     }
 
+    private void fetchBookingDetails(String bookingId) {
+        Call<Booking> call = retrofitInterface.getBookingDetails(bookingId);
+        call.enqueue(new Callback<Booking>() {
+            @Override
+            public void onResponse(Call<Booking> call, Response<Booking> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Booking booking = response.body();
+                    Log.d("DriverTripDetailActivity", "Booking details fetched successfully.");
+
+                    // Update UI with booking details
+                    // Note: Adjust these lines according to your actual data model and UI design
+                    driverName.setText(booking.getDriverId()); // Assuming you want to display the driver ID
+                    tripPickupPoint.setText(booking.getStartPoint()); // Display the trip pickup point
+                    tripDestination.setText(booking.getEndPoint()); // Display the trip destination
+                    customerName.setText(booking.getUserId()); // Assuming you want to display the user/customer ID
+                    price.setText(String.format("$%.2f", booking.getPrice())); // Display the price
+                } else {
+                    Log.e("DriverTripDetailActivity", "Failed to fetch booking details. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Booking> call, Throwable t) {
+                Log.e("DriverTripDetailActivity", "Error fetching booking details: " + t.getMessage());
+            }
+        });
+    }
 }
