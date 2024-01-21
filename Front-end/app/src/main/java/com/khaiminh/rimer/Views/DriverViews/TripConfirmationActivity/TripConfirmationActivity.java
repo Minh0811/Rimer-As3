@@ -2,6 +2,7 @@ package com.khaiminh.rimer.Views.DriverViews.TripConfirmationActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.khaiminh.rimer.Controllers.BookingControllers.UpdateBookingStatusCall
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActivity;
 
 import java.util.HashMap;
 
@@ -66,7 +68,10 @@ public class TripConfirmationActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess() {
                         Toast.makeText(TripConfirmationActivity.this, "Ride accepted successfully", Toast.LENGTH_SHORT).show();
-                        // Handle successful booking status update (e.g., navigate to another activity)
+                        // Navigate to DriverTripDetailActivity
+                        Intent intent = new Intent(TripConfirmationActivity.this, DriverTripDetailActivity.class);
+                        intent.putExtra("bookingId", bookingId); // Pass the booking ID to the next activity
+                        startActivity(intent);
                     }
 
                     @Override
