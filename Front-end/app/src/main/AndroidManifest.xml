@@ -20,7 +20,16 @@
         <activity
             android:name=".Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActivity"
             android:exported="false" />
-
+				<activity
+            android:name=".Views.Admin.DriverListView.DriverListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.Admin.UserListView.UserListActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Views.History.HistoryActivity"
+            android:exported="false" />
         <activity
             android:name=".Views.DriverViews.DriverProfile.DriverProfile"
             android:exported="false" />

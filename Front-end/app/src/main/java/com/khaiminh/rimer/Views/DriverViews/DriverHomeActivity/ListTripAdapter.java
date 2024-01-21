@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.khaiminh.rimer.Model.Booking;
-import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
 import com.khaiminh.rimer.Views.DriverViews.TripConfirmationActivity.TripConfirmationActivity;
 
