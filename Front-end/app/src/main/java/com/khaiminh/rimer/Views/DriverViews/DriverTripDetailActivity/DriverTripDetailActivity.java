@@ -2,16 +2,23 @@ package com.khaiminh.rimer.Views.DriverViews.DriverTripDetailActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.khaiminh.rimer.Controllers.BookingControllers.BookingControllers;
+import com.khaiminh.rimer.Controllers.BookingControllers.UpdateBookingStatusCallback;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.Model.Booking;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.DriverViews.DriverHomeActivity.ListTripActivity;
+import com.khaiminh.rimer.Views.DriverViews.TripConfirmationActivity.TripConfirmationActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +26,7 @@ import retrofit2.Response;
 
 public class DriverTripDetailActivity extends AppCompatActivity {
     private String bookingId;
-    private ImageView driverPicture;
+    private TextView finishedBtn;
     private TextView driverName;
     private TextView tripPickupPoint;
     private TextView tripDestination;
@@ -33,7 +40,7 @@ public class DriverTripDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_driver_trip_detail);
 
         // Initialize views
-        driverPicture = findViewById(R.id.driverPicture);
+        finishedBtn = findViewById(R.id.finishedRideButton);
         driverName = findViewById(R.id.driverName);
         tripPickupPoint = findViewById(R.id.tripPickupPoint);
         tripDestination = findViewById(R.id.tripDestination);
@@ -56,6 +63,29 @@ public class DriverTripDetailActivity extends AppCompatActivity {
 
         // Fetch booking details
         fetchBookingDetails(bookingId);
+
+        BookingControllers bookingControllers = new BookingControllers();
+        finishedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookingControllers.updateBookingStatus(bookingId, "completed", new UpdateBookingStatusCallback(){
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(DriverTripDetailActivity.this, "Ride completed", Toast.LENGTH_SHORT).show();
+                        // Navigate to ListTripActivity
+                        Intent intent = new Intent(DriverTripDetailActivity.this, ListTripActivity.class);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(DriverTripDetailActivity.this, "Failed to complete ride: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        // Handle failure to update booking status
+                    }
+                });
+            }
+        });
     }
 
     private void fetchBookingDetails(String bookingId) {

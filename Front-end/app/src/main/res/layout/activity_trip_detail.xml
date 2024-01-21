@@ -28,17 +28,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="1">
 
-        <!-- ImageView for Driver's Picture -->
-        <ImageView
-            android:id="@+id/driverPicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/imageuser"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/driver_picture"
-            android:layout_gravity="center_vertical" />
-
-
         <!-- Vertical LinearLayout for Text Details -->
         <LinearLayout
             android:layout_width="0dp"
@@ -48,40 +37,76 @@
             android:gravity="center"
             android:padding="16dp">
 
-            <!-- Driver's Name -->
-            <TextView
-                android:id="@+id/driverName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Driver's Name"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="?attr/textAppearanceListItem" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
+                <TextView
 
-            <!-- Trip's Destination -->
-            <TextView
-                android:id="@+id/tripDestination"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Destination"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="?attr/textAppearanceListItem" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/pickup_at"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:paddingRight="16dp"/>
+                <TextView
+                    android:id="@+id/tripPickupPoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/pick_up_from"
+                    android:textAppearance="?attr/textAppearanceListItem" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
+                <TextView
 
-            <!-- License Plate Number -->
-            <TextView
-                android:id="@+id/licensePlateNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="License Plate"
-                android:layout_marginBottom="8dp"
-                android:textAppearance="?attr/textAppearanceListItem" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/destination"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:paddingRight="16dp"/>
+                <TextView
+                    android:id="@+id/tripDestination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Destination"
+                    android:layout_marginBottom="8dp"
+                    android:textAppearance="?attr/textAppearanceListItem" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
+                <TextView
 
-            <!-- Bike's Description -->
-            <TextView
-                android:id="@+id/bikeDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bike Description"
-                android:textAppearance="?attr/textAppearanceListItem" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/driver_s_name"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:paddingRight="16dp"/>
+                <TextView
+                    android:id="@+id/driverName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/driver_s_name"
+                    android:layout_marginBottom="8dp"
+                    android:textAppearance="?attr/textAppearanceListItem" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

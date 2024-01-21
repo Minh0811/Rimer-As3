@@ -28,5 +28,9 @@
     <string name="you_have_a_new_request">You have a new request!!</string>
     <string name="accept_ride">Accept ride</string>
     <string name="pick_up_from">Pick up from</string>
-    <string name="customer_name">Customer Name</string>>
+    <string name="customer_name">Customer\'s Name: </string>
+    <string name="driver_s_name">Driver\'s Name: </string>
+    <string name="pickup_at">Pickup at:</string>
+    <string name="destination">Destination: </string>
+    <string name="finished_ride" >Finished ride</string>
 </resources>

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -15,8 +14,7 @@ import com.khaiminh.rimer.R;
 public class TripDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ImageView driverPicture;
-    private TextView driverName, tripDestination, licensePlateNumber, bikeDescription;
+    private TextView tripPickupPoint, tripDestination, driverName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +29,15 @@ public class TripDetailActivity extends AppCompatActivity implements OnMapReadyC
         }
 
         // Initialize views
-        driverPicture = findViewById(R.id.driverPicture);
-        driverName = findViewById(R.id.driverName);
+        tripPickupPoint = findViewById(R.id.tripPickupPoint);
         tripDestination = findViewById(R.id.tripDestination);
-        licensePlateNumber = findViewById(R.id.licensePlateNumber);
-        bikeDescription = findViewById(R.id.bikeDescription);
+        driverName = findViewById(R.id.driverName);
 
         // TODO: Load data into views
         // For example:
-        // driverName.setText("John Doe");
+        // tripPickupPoint.setText("123 Main St");
         // tripDestination.setText("Central Park");
-        // licensePlateNumber.setText("XYZ 1234");
-        // bikeDescription.setText("Black Yamaha R3");
+        // driverName.setText("John Doe");
     }
 
     @Override
