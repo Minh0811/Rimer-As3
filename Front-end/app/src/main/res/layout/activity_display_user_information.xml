@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".YourActivity">
+
+    <!-- Profile Image -->
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/avatar" /> <!-- Replace with actual image resource -->
+
+    <!-- Verification Badge -->
+    <ImageView
+        android:id="@+id/verification_badge"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_marginTop="56dp" <!-- Adjusted to align with the bottom of profile image -->
+    android:src="@drawable/verification_icon" /> <!-- Replace with actual verification icon resource -->
+
+    <!-- User Name -->
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Tyler Mason"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <!-- Email -->
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name"
+        android:layout_centerHorizontal="true"
+        android:text="tylermason@mail.com"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <!-- Become an Publisher Button -->
+    <TextView
+        android:id="@+id/become_publisher_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:text="Become an publisher"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+    <!-- Account Settings Link -->
+    <TextView
+        android:id="@+id/txtAccountSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/become_publisher_button"
+        android:layout_marginTop="24dp"
+        android:drawableStart="@drawable/ic_account_settings"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:text="Account settings"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Personal Information Link -->
+    <TextView
+        android:id="@+id/txtPersonalInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtAccountSettings"
+        android:drawableStart="@drawable/ic_personal_information"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:text="Personal information"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true" />
+
+</RelativeLayout>
