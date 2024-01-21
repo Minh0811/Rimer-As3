@@ -1,24 +1,17 @@
 import Booking from "../Models/bookingModel.js"
 import User from "../Models/userModel.js"
 
-  //ADD A BOOKING
+//ADD A BOOKING
 const createBooking = async (req, res) => {
     try {
       const newBooking = new Booking(req.body);
       const savedBooking = await newBooking.save();
-      if (req.body.user) {
-        const user = User.findById(req.body.user);
-        await user.updateOne({ $push: { onGoingBooking: savedBooking._id } });
-      }
-      if (req.body.driver) {
-        const driver = User.findById(req.body.driver);
-        await driver.updateOne({ $push: { onGoingBooking: savedBooking._id } });
-      }
       res.status(200).json(savedBooking);
     } catch (err) {
       res.status(500).json(err);
     }
 };
+
 
 //GET ALL BOOKINGS
 const getAllBookings = async (req, res) => {
@@ -33,9 +26,7 @@ const getAllBookings = async (req, res) => {
 //GET A BOOKING
 const getABooking = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id)
-      .populate("user")
-      .populate("driver");
+    const booking = await Booking.findById(req.params.id);
     res.status(200).json(booking);
   } catch (err) {
     res.status(500).json(err);
@@ -53,13 +44,9 @@ const updateBooking = async (req, res) => {
   }
 };
 
-//DELETE BOOKING
+
 const deleteBooking = async (req, res) => {
   try {
-    await User.updateMany(
-      { onGoingBooking: req.params.id },
-      { $pull: { onGoingBooking: req.params.id } }
-    );
     await Booking.findByIdAndDelete(req.params.id);
     res.status(200).json("Deleted successfully");
   } catch (err) {
@@ -67,19 +54,14 @@ const deleteBooking = async (req, res) => {
   }
 };
 
-// GET all bookings for a specific driver
+
 // GET all bookings for a specific driver
 const getDriverBookings = async (req, res) => {
   try {
     const driverId = req.params.driverId;
-    const bookings = await Booking.find({ driver: driverId }).populate('user').populate('driver');
-    // Convert ObjectId to String
-    const bookingsWithSerializedIds = bookings.map(booking => ({
-      ...booking.toObject(),
-      user: booking.user._id.toString(),
-      driver: booking.driver._id.toString(),
-    }));
-    res.status(200).json(bookingsWithSerializedIds);
+    const bookings = await Booking.find({ driver: driverId });
+    console.log(bookings);
+    res.status(200).json(bookings);
   } catch (err) {
     res.status(500).json(err);
   }
