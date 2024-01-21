@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class Booking implements Serializable {
     private String _id;
-    private String userId;
-    private String driverId;
+    private String user; // Changed from userId
+    private String driver; // Changed from driverId
     private String status;
     private double distance;
     private double price;
     private String startPoint;
     private String endPoint;
 
-    public Booking(String _id,String userId, String driverId, String status, double distance, double price, String startPoint, String endPoint) {
+    public Booking(String _id, String user, String driver, String status, double distance, double price, String startPoint, String endPoint) {
         this._id = _id;
-        this.userId = userId;
-        this.driverId = driverId;
+        this.user = user; // Changed from userId
+        this.driver = driver; // Changed from driverId
         this.status = status;
         this.distance = distance;
         this.price = price;
@@ -30,19 +30,19 @@ public class Booking implements Serializable {
         this._id = _id;
     }
     public String getUserId() {
-        return userId;
+        return user;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserId(String user) {
+        this.user = user;
     }
 
     public String getDriverId() {
-        return driverId;
+        return driver;
     }
 
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
+    public void setDriverId(String driver) {
+        this.driver = driver;
     }
 
     public String getStatus() {
@@ -89,8 +89,8 @@ public class Booking implements Serializable {
     public String toString() {
         return "Booking{" +
                 "id='" + _id + '\'' +
-                ", userId='" + userId + '\'' +
-                ", driverId='" + driverId + '\'' +
+                ", userId='" + user + '\'' +
+                ", driverId='" + driver + '\'' +
                 ", status='" + status + '\'' +
                 ", distance=" + distance +
                 ", price=" + price +

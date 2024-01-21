@@ -1,5 +1,7 @@
 package com.khaiminh.rimer.Controllers.Retrofit;
 
+import com.khaiminh.rimer.Model.BookingStatus;
+import com.khaiminh.rimer.Model.DriverResponse;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.Model.Booking;
 
@@ -26,13 +28,16 @@ public interface RetrofitInterface {
     @POST("api/reviews/create-review")
     Call<Void> submitReview(@Body HashMap<String, Object> reviewDetails);
     @POST("api/booking/create")
-    Call<Void> createNewBooking(@Body HashMap<String, Object> map);
+    Call<Booking> createNewBooking(@Body HashMap<String, Object> map);
     @GET("api/auth/getDrivers")
     Call<List<User>> executeListDrivers();
-
+    @GET("api/users/details/{userId}")
+    Call<User> getUserDetails(@Path("userId") String userId);
     // Method to fetch bookings for a specific driver
     @GET("api/booking/driver/{driverId}")
     Call<List<Booking>> getDriverBookings(@Path("driverId") String driverId);
+    @GET("api/booking/{bookingId}")
+    Call<Booking> getBookingDetails(@Path("bookingId") String bookingId);
 
     // Method to update booking status
     @PUT("api/booking/{bookingId}")
@@ -51,6 +56,12 @@ public interface RetrofitInterface {
     @POST("/updatePassword")
     Call<ResponseBody> updatePassword(@Body RequestBody body);
 
-    @POST("/user/update-username") // Ensure this matches the endpoint defined in your Node.js server
+    @POST("/api/users/update-username") // Ensure this matches the endpoint defined in your Node.js server
     Call<ResponseBody> updateUsername(@Body HashMap<String, String> map);
+
+    @GET("api/booking/check-response/{bookingId}")
+    Call<DriverResponse> checkDriverResponse(@Path("bookingId") String bookingId);
+
+    @GET("api/booking/check-booking-status/{bookingId}")
+    Call<BookingStatus> checkBookingStatus(@Path("bookingId") String bookingId);
 }

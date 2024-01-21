@@ -1,5 +1,14 @@
 import express from "express";
-import { createBooking, updateBooking, getAllBookings, getABooking, deleteBooking, getDriverBookings } from "../controllers/bookingController.js";
+import {
+  createBooking,
+  updateBooking,
+  getAllBookings,
+  getABooking,
+  deleteBooking,
+  getDriverBookings,
+  checkDriverResponse,
+  checkBookingStatus,
+} from "../controllers/bookingController.js";
 
 const router = express.Router();
 
@@ -10,5 +19,8 @@ router.get("/", getAllBookings);
 router.get("/:id", getABooking);
 router.delete("/:id", deleteBooking);
 router.get("/driver/:driverId", getDriverBookings);
+router.get("/check-response/:bookingId", checkDriverResponse);
+router.get("/check-booking-status/:bookingId", checkBookingStatus);
+
 
 export default router;

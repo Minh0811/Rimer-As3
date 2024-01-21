@@ -2,6 +2,7 @@ package com.khaiminh.rimer.Views.DriverViews.TripConfirmationActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,9 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.khaiminh.rimer.Controllers.BookingControllers.BookingControllers;
+import com.khaiminh.rimer.Controllers.BookingControllers.UpdateBookingStatusCallback;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitControllers;
 import com.khaiminh.rimer.Controllers.Retrofit.RetrofitInterface;
 import com.khaiminh.rimer.R;
+import com.khaiminh.rimer.Views.DriverViews.DriverTripDetailActivity.DriverTripDetailActivity;
 
 import java.util.HashMap;
 
@@ -44,7 +48,6 @@ public class TripConfirmationActivity extends AppCompatActivity {
         Log.d("TripConfirmationActivity", "BOOKING ID: " + bookingId);
         if (bookingId == null) {
             Log.e("TripConfirmationActivity", "Booking ID is null");
-
             // Handle the null case appropriately
         }
 
@@ -56,64 +59,48 @@ public class TripConfirmationActivity extends AppCompatActivity {
         Button buttonConfirm = findViewById(R.id.btnAcceptRide);
         Button buttonCancel = findViewById(R.id.btnCancelRide);
 
+        BookingControllers bookingControllers = new BookingControllers();
+
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateBookingStatus(bookingId, "ongoing");
+                bookingControllers.updateBookingStatus(bookingId, "accepted", new UpdateBookingStatusCallback(){
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(TripConfirmationActivity.this, "Ride accepted successfully", Toast.LENGTH_SHORT).show();
+                        // Navigate to DriverTripDetailActivity
+                        Intent intent = new Intent(TripConfirmationActivity.this, DriverTripDetailActivity.class);
+                        intent.putExtra("bookingId", bookingId); // Pass the booking ID to the next activity
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(TripConfirmationActivity.this, "Failed to accept ride: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        // Handle failure to update booking status
+                    }
+                });
             }
         });
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteBooking(bookingId);
+                bookingControllers.updateBookingStatus(bookingId, "declined", new UpdateBookingStatusCallback(){
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(TripConfirmationActivity.this, "Ride declined successfully", Toast.LENGTH_SHORT).show();
+                        // Handle successful booking status update (e.g., navigate to another activity)
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Toast.makeText(TripConfirmationActivity.this, "Failed to declined ride: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        // Handle failure to update booking status
+                    }
+                });
+                finish();
             }
         });
     }
-
-    private void updateBookingStatus(String bookingId, String newStatus) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("status", newStatus);
-
-        Call<Void> call = retrofitInterface.updateBookingStatus(bookingId, map);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(TripConfirmationActivity.this, "Booking updated successfully", Toast.LENGTH_SHORT).show();
-                    // Optionally, close the activity or navigate the user away
-                } else {
-                    Toast.makeText(TripConfirmationActivity.this, "Failed to update booking", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(TripConfirmationActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void deleteBooking(String bookingId) {
-        Call<Void> call = retrofitInterface.deleteBooking(bookingId);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(TripConfirmationActivity.this, "Booking deleted successfully", Toast.LENGTH_SHORT).show();
-                    // Close the activity and return to the previous one
-                    finish();
-                } else {
-                    Toast.makeText(TripConfirmationActivity.this, "Failed to delete booking", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(TripConfirmationActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
 }

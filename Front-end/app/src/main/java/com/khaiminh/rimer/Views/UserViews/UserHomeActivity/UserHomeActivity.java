@@ -385,32 +385,37 @@ public class UserHomeActivity extends AppCompatActivity implements OnMapReadyCal
         price.setText(String.format("%.2f", priceValue));
     }
 
-    private String getAddress(LatLng latLng){
-        Geocoder geocoder;
+    private String getAddress(LatLng latLng) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses;
-        geocoder = new Geocoder(this, Locale.getDefault());
 
         try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-            String city = addresses.get(0).getLocality();
-            String state = addresses.get(0).getAdminArea();
-            String country = addresses.get(0).getCountryName();
-            String postalCode = addresses.get(0).getPostalCode();
-            String knownName = addresses.get(0).getFeatureName();
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1); // Get max 1 location result
+
+            if (addresses == null || addresses.isEmpty()) {
+                // Handle case where no addresses are found
+                return "No Address Found";
+            }
+
+            // It's safe to access the first element, as we've checked that the list is not empty
+            String address = addresses.get(0).getAddressLine(0);
+            // ... you can use other address components as needed ...
+
+            // Your existing code for handling the fragment transaction
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment prev = getFragmentManager().findFragmentByTag("dialog");
             if (prev != null) {
-
                 ft.remove(prev);
             }
+            ft.commit();
+
             return address;
         } catch (IOException e) {
             e.printStackTrace();
             return "No Address Found";
-
         }
     }
+
 
     @Override
     protected void onResume() {

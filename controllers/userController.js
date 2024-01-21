@@ -40,6 +40,19 @@ const updateUsername = async (req, res) => {
   }
 };
 
+const getUserDetails = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log("UserID:", req.params.userId);
+    const user = await User.findById(userId).select("name"); // Select only the 'name' field
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ name: user.name });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
 
 // Export the function
-export { updateUsername };
+export { updateUsername, getUserDetails };
