@@ -68,15 +68,25 @@ const deleteBooking = async (req, res) => {
 };
 
 // GET all bookings for a specific driver
+// GET all bookings for a specific driver
 const getDriverBookings = async (req, res) => {
   try {
     const driverId = req.params.driverId;
-    const bookings = await Booking.find({ driver: driverId }).populate('user');
-    res.status(200).json(bookings);
+    const bookings = await Booking.find({ driver: driverId }).populate('user').populate('driver');
+    // Convert ObjectId to String
+    const bookingsWithSerializedIds = bookings.map(booking => ({
+      ...booking.toObject(),
+      user: booking.user._id.toString(),
+      driver: booking.driver._id.toString(),
+    }));
+    res.status(200).json(bookingsWithSerializedIds);
   } catch (err) {
     res.status(500).json(err);
   }
 };
+
+
+
 
 const checkDriverResponse = async (req, res) => {
   try {

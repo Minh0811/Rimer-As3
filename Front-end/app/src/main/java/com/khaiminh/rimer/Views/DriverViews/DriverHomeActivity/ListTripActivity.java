@@ -92,6 +92,8 @@ public class ListTripActivity extends AppCompatActivity {
                     Log.d("ListTripActivity", "Number of pending bookings fetched: " + pendingBookings.size());
                     for (Booking booking : pendingBookings) {
                         Log.d("ListTripActivity", "Booking: " + booking.toString());
+                        Log.d("ListTripActivity", "User ID: " + booking.getUserId());
+                        Log.d("ListTripActivity", "Driver ID: " + booking.getDriverId());
                     }
 
                     // Use the filtered list for the adapter
@@ -114,6 +116,8 @@ public class ListTripActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     protected void onResume() {

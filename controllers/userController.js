@@ -43,6 +43,7 @@ const updateUsername = async (req, res) => {
 const getUserDetails = async (req, res) => {
   try {
     const userId = req.params.userId;
+    console.log("UserID:", req.params.userId);
     const user = await User.findById(userId).select("name"); // Select only the 'name' field
     if (!user) {
       return res.status(404).json({ message: "User not found" });

@@ -23,6 +23,6 @@ app.use(cookiesParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/booking", bookingRoutes);
 app.use('/api/reviews', reviewRoutes); 
-app.use("/user", userRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
