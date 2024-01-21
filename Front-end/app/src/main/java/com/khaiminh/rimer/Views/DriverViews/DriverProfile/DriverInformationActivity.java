@@ -1,4 +1,4 @@
-package com.example.rimer;
+package com.khaiminh.rimer.Views.DriverViews.DriverProfile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.khaiminh.rimer.R;
 
 public class DriverInformationActivity extends AppCompatActivity {
 

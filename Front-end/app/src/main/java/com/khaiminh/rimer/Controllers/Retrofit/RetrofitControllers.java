@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitControllers {
     public Retrofit retrofit;
     public RetrofitInterface retrofitInterface;
-    public String BASE_URL = "http://10.0.2.2:3000/";
+    public String BASE_URL = "https://rimerapp-4cd08109739f.herokuapp.com/";
 
     public void retrofitController(){
         Gson gson = new GsonBuilder()
