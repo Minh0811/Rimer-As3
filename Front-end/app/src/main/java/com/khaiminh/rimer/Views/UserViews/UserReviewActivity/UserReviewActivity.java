@@ -2,6 +2,7 @@ package com.khaiminh.rimer.Views.UserViews.UserReviewActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class UserReviewActivity extends AppCompatActivity {
     private EditText commentBox;
     private Button submitButton;
     private ReviewControllers reviewControllers;
+    private String bookingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,9 @@ public class UserReviewActivity extends AppCompatActivity {
 
         reviewControllers = new ReviewControllers();
 
+        // Get the booking ID from the intent
+        bookingId = getIntent().getStringExtra("bookingId");
+        Log.d("Booking ID", "Booking ID: " + bookingId);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
