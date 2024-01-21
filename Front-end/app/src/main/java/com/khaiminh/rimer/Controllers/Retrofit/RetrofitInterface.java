@@ -1,5 +1,6 @@
 package com.khaiminh.rimer.Controllers.Retrofit;
 
+import com.khaiminh.rimer.Model.BookingStatus;
 import com.khaiminh.rimer.Model.DriverResponse;
 import com.khaiminh.rimer.Model.User;
 import com.khaiminh.rimer.Model.Booking;
@@ -60,4 +61,7 @@ public interface RetrofitInterface {
 
     @GET("api/booking/check-response/{bookingId}")
     Call<DriverResponse> checkDriverResponse(@Path("bookingId") String bookingId);
+
+    @GET("api/booking/check-booking-status/{bookingId}")
+    Call<BookingStatus> checkBookingStatus(@Path("bookingId") String bookingId);
 }
